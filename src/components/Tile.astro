@@ -1,0 +1,11 @@
+---
+const { href, title } = Astro.props;
+---
+
+<div class="col-md-4">
+    <a href={href} class="text-decoration-none">
+        <div class="d-flex align-items-center text-white text-center bg-primary rounded" style="height:150px;">
+            <h3 class="mb-0">{title}</h3>
+        </div>
+    </a>
+</div>

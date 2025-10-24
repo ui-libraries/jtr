@@ -1,11 +1,31 @@
 ---
+import HomeBanner from '../components/HomeBanner.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Dashboard from '../components/Dashboard.astro';
+import NavTiles from '../components/NavTiles.astro';
 
 const pageTitle = "A Just and True Return";
 
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h2>Welcome to JTR</h2>
+
+	<HomeBanner />
+
+	<p><strong>A Just and True Return (JTR)</strong> intro text to go here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, link to <a href="/about/">About</a> page.</p>
+
+	<hr />
+
+   <Dashboard />
+
+   <hr />
+
+  <NavTiles />
+
+  <hr />
+
+  <!-- Map -->
+
+  <!-- Essay preview? -->
 
 </BaseLayout>

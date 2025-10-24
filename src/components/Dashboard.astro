@@ -1,0 +1,23 @@
+---
+import DashboardBigNumber from './DashboardBigNumber.astro';
+---
+
+<div id="overview-dashboard" class="w-100 p-3 border bg-light">
+        
+   <div style="display: flex; justify-content: center; align-items: center;">                       
+            <div id="registration-bars" class="flex-fill text-center"></div>
+    </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+        <p class="dash-label">Registrations by year</p>
+    </div>
+    
+    <div class="d-flex justify-content-between mb-3">
+
+        <DashboardBigNumber divId="registration-count" label="Registrations" number="?" />
+        <DashboardBigNumber divId="people-count" label="People" number="?" />
+        <DashboardBigNumber divId="county-rep-count" label="Counties Represented" number="?" />
+        <DashboardBigNumber divId="transcription-count" label="Registrations Transcribed" number="?" />
+        
+    </div>
+    
+</div>
