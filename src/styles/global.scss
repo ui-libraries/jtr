@@ -1,10 +1,40 @@
 @charset "UTF-8";
 
 /* Variables */
-
+@use 'colors.scss';
+@use 'typography.scss';
 
 
 /* Global styles */
+
+body {
+    font-family: typography.$base-font-family;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-family: typography.$base-font-family;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: typography.$base-font-family;
+    color: colors.$secondary-accent;
+    font-weight: bold;
+}
+
+a {
+    color: colors.$primary-accent;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background-color: colors.$breaker-color;
+    margin: 20px 0;
+}
+
+
 
 /* Dashboard Styles */
 
