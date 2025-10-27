@@ -1,0 +1,14 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import NarrowBanner from '../components/NarrowBanner.astro';
+
+const { pageTitle } = Astro.props;
+
+---
+
+<BaseLayout pageTitle={pageTitle}>
+
+    <NarrowBanner />
+    <slot />
+
+</BaseLayout>
