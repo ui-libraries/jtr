@@ -1,0 +1,5 @@
+---
+const { role, name, id } = Astro.props;
+---
+
+<p><strong>{role}:</strong> <a href=`/person?pid=${id}`>{name}</a></p>

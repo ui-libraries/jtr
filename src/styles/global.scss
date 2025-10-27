@@ -34,6 +34,14 @@ hr {
     margin: 20px 0;
 }
 
+/* Page Styles */
+
+.sidestripe-left {
+    border-left: 15px solid colors.$secondary-accent;
+    padding-left: 2rem;
+    margin: 2rem 0;
+    line-height: 1;
+}
 
 
 /* Dashboard Styles */
@@ -41,3 +49,4 @@ hr {
 .big-number {
     font-size: 3rem;
 }
+

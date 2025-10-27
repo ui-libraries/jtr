@@ -1,15 +1,46 @@
 ---
+
+import Family from './Family.astro';
+import getFamilyList from '../../scripts/get_family_list.js';
+import RegOnPerson from '../registration/RegOnPerson.astro';
+import getRelatedRegistrations from '../../scripts/get_related_registrations';
+
 const { person } = Astro.props;
-//console.log(person);
+const familyList = await getFamilyList(person.pid, person.family);
+
+const collated = await getRelatedRegistrations(person.pid);
+console.log(collated); 
 ---
-<div class="person-profile">
+
+<div id="person-profile" class="container-fluid mt-5">
     <h1>{person.name}</h1>
 
+    <div id="personal-details" class="sidestripe-left">
 
-    <!--    PersonInfo
-    Relations
-    Registrations
-    RegistrationStub
-    Sources -->
+        <h2>Personal Details</h2>
+        <p><strong>Role:</strong> {person.role}</p>
+        <p><strong>Imputed Sex:</strong> {person.imp_sex}</p>
+        <p><strong>Imputed Race:</strong> {person.norm_race}</p>
+        <p><strong>Date of Birth:</strong> {person.dob}</p>
+
+    </div>
+
+    <div id="family" class="sidestripe-left">
+
+        <h2>Family</h2>
+        {(familyList || []).map((member) => (
+            <Family name={member.name} role={member.role} id={member.id}/>
+        ))}
+
+    </div>
+
+    <div id="person-registrations" class="sidestripe-left">
+
+        <h2>Registration(s)</h2>
+        <!-- {person.registrations.map((registration) => (
+            <p>{registration}</p>
+        ))}-->
+
+    </div>
 
 </div>

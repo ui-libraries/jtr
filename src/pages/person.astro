@@ -7,7 +7,7 @@ const pageTitle = "A Just and True Return";
 const url = Astro.url
 const pidParam = url.searchParams.get('pid');
 const pid = pidParam ? pidParam : '0';
-const response = await fetch(`https://s-lib024.lib.uiowa.edu/ajtr/api.php/records/persons?filter=pid,eq,${pid}&join=registered,registrations&join=family`);
+const response = await fetch(`https://s-lib024.lib.uiowa.edu/ajtr/api.php/records/persons?filter=pid,eq,${pid}&join=family`);
 const data = await response.json();
 const person = data.records[0];
 
