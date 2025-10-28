@@ -28,9 +28,13 @@ console.log(registrations);
     <div id="family" class="sidestripe-left">
 
         <h2>Family</h2>
-        {(familyList || []).map((member) => (
-            <Family name={member.name} role={member.role} id={member.id}/>
-        ))}
+        {(familyList && familyList.length > 0) ? (
+            familyList.map((member) => (
+                <Family name={member.name} role={member.role} id={member.id} />
+            ))
+        ) : (
+            <p>No family records found.</p>
+        )}
 
     </div>
 

@@ -1,0 +1,79 @@
+---
+//Add tagging for registration full details view
+
+import Transcript from './Transcript.astro';
+import RegisteredPerson from './RegisteredPerson.astro';
+import Enslaver from './Enslaver.astro';   
+import PersonLink from '../person/PersonLink.astro'; 
+
+const { registration } = Astro.props;
+---
+
+<div id="registration" class="container-fluid mt-5">
+  <h1>{registration.old_regid}</h1>
+
+    <div id="registration-details" class="sidestripe-left">
+        <h2>Registration Details</h2>
+        
+        <p><strong>Date:</strong> {registration.date}</p>
+        <p><strong>Registrant:</strong> <PersonLink name={registration.registrant_name} pid={registration.registrant_pid} />
+        {registration.registrant2_pid != null &&
+         String(registration.registrant2_pid).trim() !== "" &&
+         String(registration.registrant2_pid) !== "0" && (
+            <>
+                , <PersonLink name={registration.registrant2_name} pid={registration.registrant2_pid} />
+            </>
+        )}
+        </p>
+        <p><strong>County (Historical):</strong> {registration.county}</p>
+        <p><strong>County (modern):</strong> {registration.modern_county}</p>
+        <p><strong>Residence:</strong> {registration.residence}</p>
+        <p><strong>Tags:</strong> Complete fxn</p>
+
+
+    </div>
+  
+    <div id="registered-persons" class="sidestripe-left">
+        <h2>Registered Individual(s)</h2>
+            <p><i>Details given are as recorded in the registration.</i></p>
+        {(registration.registered || []).map((person: unknown) => (
+            <RegisteredPerson person={person} />
+        ))}
+
+    </div>
+
+    <div id="enslavers" class="sidestripe-left">
+        <h2>Enslaver(s)</h2>
+            <p><i>Details given are as recorded in the registration.</i></p>
+        {(registration.enslaving || []).map((person: unknown) => (
+            <Enslaver person={person} />
+        ))}
+    </div>
+
+    {registration.registration_md != null && (
+        <div id="registration-transcript" class="sidestripe-left">
+            <h2>Registration Transcript</h2>
+            <Transcript transcript={registration.registration_md} />
+        </div>
+    )}
+
+    {registration.return_md != null && (
+    <div id="return-transcript" class="sidestripe-left">
+        <h2>Return Transcript</h2>
+            <Transcript transcript={registration.return} />
+    </div>
+    )}
+
+    <div id="sources" class="sidestripe-left">
+        <h2>Sources</h2>
+        <p><strong>Registry Sources</strong>: {registration.registry_sources}</p>
+        {registration.ext_primary_sources && String(registration.ext_primary_sources).trim() !== "" && (
+            <p><strong>Additional Primary Sources</strong>: {registration.ext_primary_sources}</p>
+        )}
+        {registration.secondary_sources && String(registration.secondary_sources).trim() !== "" && (
+            <p><strong>Secondary Sources</strong>: {registration.secondary_sources}</p>
+        )}
+    </div>
+
+
+</div>

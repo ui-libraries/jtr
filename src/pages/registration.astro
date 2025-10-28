@@ -1,22 +1,23 @@
 ---
-import PageLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import RegistrationFull from '../components/registration/RegistrationFull.astro';
+
+import { getRegistrationsByRegid } from '../scripts/get_related_registrations.js';
+
+
+//Get registration ID from URL parameter
+const url = Astro.url
+const regidParam = url.searchParams.get('regid');
+const regid = regidParam ? regidParam : '0';
+const data = await getRegistrationsByRegid(regid);
+const registration = data[0];
 
 const pageTitle = "A Just and True Return";
 
 ---
 
 <PageLayout pageTitle={pageTitle}>
-  <h1>Registration ID</h1>
 
-    <!-- create Layouts and hook in API calls:
-   Registration
-    RegistrationInfo
-    Registered People
-        PersonStub
-    Enslavers
-        PersonStub
-    RegistrationTranscript
-    ReturnTranscript
-    Sources -->
+    <RegistrationFull registration={registration} />
 
 </PageLayout>

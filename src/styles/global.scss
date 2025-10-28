@@ -36,11 +36,31 @@ hr {
 
 /* Page Styles */
 
+#person-profile, #registration {
+    h1 {
+        padding-left:2.5rem;
+        color:black;
+    }
+}
+
 .sidestripe-left {
     border-left: 15px solid colors.$secondary-accent;
     padding-left: 2rem;
     margin: 2rem 0;
     line-height: 1;
+    margin-bottom: 2rem;
+
+    h2 {
+        text-transform: uppercase;
+        font-size: large;
+        margin: 1.5em 0;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+        font-weight:400;
+        margin: 10px 0;
+    }
 }
 
 

@@ -1,0 +1,14 @@
+---
+import PersonLink from '../person/PersonLink.astro';
+const { person } = Astro.props;
+---
+
+<div class="enslaver container">
+
+            <h3><a href=`/person?pid=${person.enslaver_pid}`>{person.name}</a></h3>
+            
+            <p><strong>Occupation:</strong> {person.occupation_ar}</p>
+            <p><strong>Relation to registrant:</strong> {person.registrant_relation}</p>
+
+
+</div>

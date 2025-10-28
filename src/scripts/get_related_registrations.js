@@ -81,18 +81,10 @@ export default async function getRelatedRegistrations(id, role) {
     return detailedRegs;
 }
 
-async function getRegistrationsByRegid(id) {
+export async function getRegistrationsByRegid(id) {
    const data = await getApiData(`registrations?filter=regid,eq,${id}&join=registered&join=enslaving`);
-    const streamlined = {
-        regid: data[0]?.regid || id,
-        label_id: data[0]?.old_regid || id,
-        date: data[0]?.date || null,
-        county: data[0]?.county || null,
-        registered: data[0]?.registered || [],
-        enslaving: data[0]?.enslaving || []
-    }
 
-   return streamlined;
+     return data;
 }
 
 async function getApiData(query) {

@@ -1,0 +1,37 @@
+---
+import PersonLink from '../person/PersonLink.astro';
+const { person } = Astro.props;
+---
+
+<div class="registered-person container">
+
+            <h3><a href=`/person?pid=${person.registered_pid}`>{person.name_as_recorded}</a></h3>
+            
+
+            <p><strong>Date of Birth:</strong> {person.dob}</p>
+            <p><strong>Sex:</strong> {person.sex}</p>
+            <p><strong>Race:</strong> {person.race}</p>
+            <p><strong>Status:</strong> {person.status}</p>
+            <p><strong>Mother's name:</strong>
+                {(
+                    person.mother_pid != null &&
+                    String(person.mother_pid).trim() !== '' &&
+                    String(person.mother_pid).trim() !== '0'
+                ) ? (
+                    <PersonLink pid={person.mother_pid} name={person.mother_name} />
+                ) : (
+                    person.mother_name?.trim() ? person.mother_name : 'Not Listed'
+                )}
+            </p>
+            {person.mother_race?.trim() && (
+                <p><strong>Race of mother:</strong> {person.mother_race}</p>
+            )}
+            {person.mother_status?.trim() && (
+                <p><strong>Status of mother:</strong> {person.mother_status}</p>
+            )}
+            {person.mother_description?.trim() && (
+                <p><strong>Description of mother:</strong> {person.mother_description}</p>
+            )}
+
+
+</div>
