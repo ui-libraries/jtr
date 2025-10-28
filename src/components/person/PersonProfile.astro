@@ -8,8 +8,8 @@ import getRelatedRegistrations from '../../scripts/get_related_registrations';
 const { person } = Astro.props;
 const familyList = await getFamilyList(person.pid, person.family);
 
-const collated = await getRelatedRegistrations(person.pid);
-console.log(collated); 
+const registrations = await getRelatedRegistrations(person.pid, person.role);
+console.log(registrations); 
 ---
 
 <div id="person-profile" class="container-fluid mt-5">
@@ -37,9 +37,9 @@ console.log(collated);
     <div id="person-registrations" class="sidestripe-left">
 
         <h2>Registration(s)</h2>
-        <!-- {person.registrations.map((registration) => (
-            <p>{registration}</p>
-        ))}-->
+        {(registrations || []).map((reg) => (
+            <RegOnPerson registration={reg} />
+        ))}
 
     </div>
 

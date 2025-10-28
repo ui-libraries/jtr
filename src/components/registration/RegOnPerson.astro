@@ -1,0 +1,28 @@
+---
+import PersonLink from '../person/PersonLink.astro';
+const { registration } = Astro.props;
+---
+
+<div class="registration-stub container">
+    <h3><a href=`../registration?regid=${registration.regid}`> {registration.label_id}</h3>
+    <p><strong>Role on Registration:</strong> {registration.role}</p>
+    <p><strong>Registered Individual(s):</strong>
+
+    {registration.registered?.map((person: { name_as_recorded: unknown; registered_pid: unknown; }, i: number) => (
+        <>
+            {i > 0 && ', '}
+            <PersonLink name={person.name_as_recorded} pid={person.registered_pid} />
+        </>
+    ))}
+    </p>
+    <p><strong>Registered Enslaver(s):</strong>
+        {registration.enslaving?.map((person: { name: unknown; enslaver_pid: unknown; }, i: number) => (
+        <>
+            {i > 0 && ', '}
+            <PersonLink name={person.name} pid={person.enslaver_pid} />
+        </>
+    ))}
+    </p>
+    <p><strong>Date:</strong> {registration.date}</p>
+    <p><strong>County (Historical):</strong> {registration.county}</p>   
+</div>
