@@ -1,0 +1,7 @@
+---
+const { label, name, type = "text", value = "", placeholder = "", required = false } = Astro.props;
+---
+<div class="form-field">
+  <label for={name}>{label}</label>
+  <input type={type} name={name} id={name} value={value} placeholder={placeholder} required={required} />
+</div>

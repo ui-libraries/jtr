@@ -1,0 +1,124 @@
+---
+interface Props {
+    name?: string;
+    id?: string;
+    label?: string;
+    value?: string | Date;
+    required?: boolean;
+    min?: string | Date;
+    max?: string | Date;
+    error?: string;
+    help?: string;
+    disabled?: boolean;
+    autofocus?: boolean;
+    class?: string;
+}
+
+const {
+    name = 'date',
+    id,
+    label,
+    value,
+    required = false,
+    min,
+    max,
+    error,
+    help,
+    disabled = false,
+    autofocus = false,
+    class: className = '',
+} = Astro.props as Props;
+
+// format JS Date or ISO string to yyyy-mm-dd for <input type="date">
+const fmt = (v?: string | Date) => {
+    if (!v) return undefined;
+    if (v instanceof Date && !isNaN(v.getTime())) {
+        const y = v.getFullYear();
+        const m = String(v.getMonth() + 1).padStart(2, '0');
+        const d = String(v.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    }
+    // assume already a valid yyyy-mm-dd or ISO string; try to normalize ISO -> yyyy-mm-dd
+    if (typeof v === 'string') {
+        const maybe = v.split('T')[0];
+        return maybe;
+    }
+    return undefined;
+};
+
+const inputId = id ?? `${name}-${Math.random().toString(36).slice(2, 8)}`;
+const describedBy = (help || error) ? `${inputId}-help` : undefined;
+---
+<div class={`date-field ${className} ${error ? 'has-error' : ''}`}>
+    {label ? (
+        <label for={inputId} class="date-label">
+            {label}{required ? <span aria-hidden="true" class="required-star"> *</span> : null}
+        </label>
+    ) : null}
+
+    <input
+        class="date-input"
+        type="date"
+        id={inputId}
+        name={name}
+        value={fmt(value)}
+        min={fmt(min)}
+        max={fmt(max)}
+        required={required}
+        disabled={disabled}
+        autofocus={autofocus}
+        aria-invalid={error ? "true" : "false"}
+        aria-describedby={describedBy}
+    />
+
+    {help ? <div id={`${inputId}-help`} class="date-help">{help}</div> : null}
+    {error ? <div id={`${inputId}-error`} class="date-error" role="alert">{error}</div> : null}
+</div>
+
+<style>
+    .date-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    .date-label {
+        font-size: 0.9rem;
+        color: #111827;
+    }
+
+    .required-star {
+        color: #b91c1c;
+        margin-left: 0.15rem;
+    }
+
+    .date-input {
+        padding: 0.5rem 0.6rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        background: white;
+        color: #111827;
+    }
+
+    .date-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+        border-color: #3b82f6;
+    }
+
+    .date-help {
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+    .date-error {
+        font-size: 0.85rem;
+        color: #b91c1c;
+    }
+
+    .has-error .date-input {
+        border-color: #fca5a5;
+    }
+</style>

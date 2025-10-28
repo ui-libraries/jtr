@@ -6,9 +6,116 @@ const pageTitle = "A Just and True Return: Search";
 ---
 
 <PageLayout pageTitle={pageTitle}>
-  <h1>Search for people and registrations</h1>
+  <h1>Search</h1>
 
-    <!-- Create search form and results layouts 
-     Need to support tabs, api calls, and result ranking -->
+    <section class="tabbed-search box">
+
+      <div role="tablist" class="tabs" aria-label="Search mode">
+        <button id="tab-person" role="tab" aria-controls="panel-person" aria-selected="true">Search People</button>
+        <button id="tab-registration" role="tab" aria-controls="panel-registration" aria-selected="false">Search Registrations</button>
+      </div>
+
+      <div id="panel-person" class="tab-panel" role="tabpanel" aria-labelledby="tab-person" aria-hidden="false">
+        <form id="form-person" class="search-form">
+          <div class="form-row">
+            <input type="search" name="q" placeholder="Enter keywords, e.g. 'return of the native'" aria-label="Simple search keywords" required />
+            <select name="scope" aria-label="Scope">
+              <option value="all">All fields</option>
+              <option value="title">Title</option>
+              <option value="author">Author</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Search</button>
+            <button type="reset">Reset</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="panel-registration" class="tab-panel" role="tabpanel" aria-labelledby="tab-registration" aria-hidden="true">
+        <form id="form-registration" class="search-form">
+          <div class="form-row">
+            <input type="text" name="title" placeholder="Title" aria-label="Title" />
+            <input type="text" name="author" placeholder="Author" aria-label="Author" />
+          </div>
+          <div class="form-row">
+            <input type="number" name="year" placeholder="Year" aria-label="Year" min="0" />
+            <select name="format" aria-label="Format">
+              <option value="">Any format</option>
+              <option>Article</option>
+              <option>Book</option>
+              <option>Thesis</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input type="text" name="keywords" placeholder="Additional keywords (comma separated)" aria-label="Keywords" />
+          </div>
+          <div class="form-actions">
+            <button type="submit">Search</button>
+            <button type="reset">Reset</button>
+          </div>
+        </form>
+      </div>
+
+
+    </section>
+
+
+     <div id="search-results" class="container-fluid mt-5">
+        <h2>Search Results</h2>
+        <p>Search functionality coming soon.</p>
+      </div>
 
 </PageLayout>
+
+
+  <script type="module">
+    // Tab switching
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          const panel = document.getElementById(t.getAttribute('aria-controls'));
+          const selected = t === tab;
+          t.setAttribute('aria-selected', String(selected));
+          if (panel) {
+            panel.setAttribute('aria-hidden', String(!selected));
+          }
+        });
+      });
+    });
+
+    // Simple handler to demonstrate searching — replace with real API calls
+    const resultsContainer = document.getElementById('search-results');
+
+    function showResults(summary, items = []) {
+      resultsContainer.innerHTML = `
+        <h2>Search Results</h2>
+        <p><strong>${summary}</strong></p>
+        ${items.length ? '<ul>' + items.map(i => `<li>${i}</li>`).join('') + '</ul>' : '<p>No results found.</p>'}
+      `;
+    }
+
+    function collectFormData(form) {
+      const fd = new FormData(form);
+      const obj = {};
+      for (const [k, v] of fd.entries()) {
+        if (v !== '') obj[k] = v;
+      }
+      return obj;
+    }
+
+    document.getElementById('form-simple').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = collectFormData(e.currentTarget);
+      // Placeholder behavior: show the query and pretend we got results
+      showResults('Performed simple search', [`Query: ${JSON.stringify(q)}`]);
+      // TODO: replace with fetch('/api/search', { method:'POST', body: JSON.stringify(q) })...
+    });
+
+    document.getElementById('form-advanced').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = collectFormData(e.currentTarget);
+      showResults('Performed advanced search', [`Query: ${JSON.stringify(q)}`]);
+    });
+  </script>
