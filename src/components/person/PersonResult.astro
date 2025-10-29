@@ -1,0 +1,11 @@
+---
+import PersonLink from './PersonLink.astro';
+
+const { person } = Astro.props;
+---
+
+<div class="person-result search-result sidestripe-left">
+    <h3><PersonLink name={person.name} pid={person.pid} /></h3>
+    <p><strong>Role:</strong> {person.role}</p>
+    <p><strong>Date of birth:</strong> {person.dob}</p>
+</div>

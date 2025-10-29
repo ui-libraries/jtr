@@ -1,0 +1,11 @@
+---
+const { registration } = Astro.props;
+---
+
+<div class="registration-result search-result sidestripe-left">
+    <h3><a href=`../registration?regid=${registration.regid}`>{registration.old_regid}</a></h3>
+    <p><strong>Registration of {registration.registered_name}</strong></p>
+    <p><strong>Enslaver:</strong> {registration.enslaver_name}</p>
+    <p><strong>Date of Registration:</strong> {registration.registration_date}</p>
+    <p><strong>County:</strong> {registration.county} (historical), {registration.modern_county} (modern)</p>
+</div>

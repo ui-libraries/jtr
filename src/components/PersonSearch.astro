@@ -31,16 +31,39 @@ const { params } = Astro.props;
 <form id="form-person" class="search-form">
     <input type="hidden" name="query" value="persons" />
     <div class="form-row">
-        <TextField name="name" label="Name" placeholder="Full or partial name" />
+        <TextField
+            name="name"
+            label="Name"
+            placeholder="Full or partial name"
+            value={params && params.name ? params.name : ''}
+        />
     </div>
     <div class="form-row">
-        <SelectField name="role" label="Role" options={role} placeholder="Select Role" />
+        <SelectField
+            name="role"
+            label="Role"
+            options={role}
+            placeholder="Select Role"
+            value={params && params.role ? params.role : ''}
+        />
     </div>
     <div class="form-row">
-        <SelectField name="imp_sex" label="Imputed Sex" options={sex} placeholder="Select Sex" />
+        <SelectField
+            name="imp_sex"
+            label="Imputed Sex"
+            options={sex}
+            placeholder="Select Sex"
+            value={params && params.imp_sex ? params.imp_sex : ''}
+        />
     </div>
     <div class="form-row">
-        <SelectField name="norm_race" label="Normalized Race" options={race} placeholder="Select Race" />
+        <SelectField
+            name="norm_race"
+            label="Normalized Race"
+            options={race}
+            placeholder="Select Race"
+            value={params && params.norm_race ? params.norm_race : ''}
+        />
     </div>
 
     <FormActions />

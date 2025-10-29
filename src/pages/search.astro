@@ -2,10 +2,33 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import PersonSearch from '../components/PersonSearch.astro';
 import RegistrationSearch from '../components/RegistrationSearch.astro';
+import PersonResult from '../components/person/PersonResult.astro';
+import RegistrationResult from '../components/registration/RegistrationResult.astro';
+
+import { runSearch } from '../scripts/search.js';
+
+// Parse URL search params
+const url = (typeof Astro !== 'undefined' && Astro?.request) ? new URL(Astro.request.url) : null;
+const paramsObj = url ? Object.fromEntries(url.searchParams.entries()) : {};
+const searchParams = Object.keys(paramsObj).length ? paramsObj : {};
+// If true, client-side code should run a search on load (placeholder — implement runSearch)
+const runSearchOnLoad = Object.keys(searchParams).length > 0;
+
+// If there are search params, run search
+let searchResults = null;
+let resultCount = 0;
+if (runSearchOnLoad) {
+  try {
+    searchResults = await runSearch(searchParams);
+    resultCount = (searchResults && Array.isArray(searchResults)) ? searchResults.length : 0;
+    console.log('Search results:', searchResults);
+
+  } catch (err) {
+    console.log('Search error:', err);
+  }
+}
 
 const pageTitle = "A Just and True Return: Search";
-
-const searchParams =  {};
 
 ---
 
@@ -15,25 +38,40 @@ const searchParams =  {};
     <section class="tabbed-search">
 
       <div role="tablist" class="tabs" aria-label="Search mode">
-        <button id="tab-registration" role="tab" aria-controls="panel-registration" aria-selected="true">Search Registrations</button>
-        <button id="tab-person" role="tab" aria-controls="panel-person" aria-selected="false">Search People</button>
+        <button id="tab-registration" role="tab" aria-controls="panel-registration" aria-selected={searchParams?.query === 'persons' ? 'false' : 'true'}>Search Registrations</button>
+        <button id="tab-person" role="tab" aria-controls="panel-person" aria-selected={searchParams?.query === 'persons' ? 'true' : 'false'}>Search People</button>
       </div>
 
-      <div id="panel-registration" class="tab-panel" role="tabpanel" aria-labelledby="tab-registration" aria-hidden="false">
-          <RegistrationSearch params={searchParams} />
+      <div id="panel-registration" class="tab-panel" role="tabpanel" aria-labelledby="tab-registration" aria-hidden={searchParams?.query === 'persons' ? 'true' : 'false'}>
+          <RegistrationSearch params={searchParams?.query === 'full_registration' ? searchParams : {}} />
       </div>
 
-      <div id="panel-person" class="tab-panel" role="tabpanel" aria-labelledby="tab-person" aria-hidden="true">
-          <PersonSearch params={searchParams} />
+      <div id="panel-person" class="tab-panel" role="tabpanel" aria-labelledby="tab-person" aria-hidden={searchParams?.query === 'persons' ? 'false' : 'true'}>
+          <PersonSearch params={searchParams?.query === 'persons' ? searchParams : {}} />
       </div>
 
     </section>
 
 
-     <div id="search-results" class="container-fluid mt-5">
-        <h2>Search Results</h2>
-        <p>Search functionality coming soon.</p>
+    {runSearchOnLoad && (
+      <div id="search-results" class="container-fluid mt-5">
+        <h2>Search Results: {resultCount}</h2>
+        
+        {searchResults && searchResults.length > 0 ? (
+          searchParams?.query === 'persons' ? (
+            searchResults.map((person) => (
+              <PersonResult person={person} />
+            ))
+          ) : (
+            searchResults.map((registration) => (
+              <RegistrationResult registration={registration} />
+            ))
+          )
+        ) : (
+          <p>No results found.</p>
+        )}
       </div>
+    )}
 
 </PageLayout>
 
@@ -54,17 +92,6 @@ const searchParams =  {};
       });
     });
 
-    // Simple handler to demonstrate searching — replace with real API calls
-    const resultsContainer = document.getElementById('search-results');
-
-    function showResults(summary, items = []) {
-      resultsContainer.innerHTML = `
-        <h2>Search Results</h2>
-        <p><strong>${summary}</strong></p>
-        ${items.length ? '<ul>' + items.map(i => `<li>${i}</li>`).join('') + '</ul>' : '<p>No results found.</p>'}
-      `;
-    }
-
     function collectFormData(form) {
       const fd = new FormData(form);
       const obj = {};
@@ -74,17 +101,22 @@ const searchParams =  {};
       return obj;
     }
 
-    document.getElementById('form-simple').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const q = collectFormData(e.currentTarget);
-      // Placeholder behavior: show the query and pretend we got results
-      showResults('Performed simple search', [`Query: ${JSON.stringify(q)}`]);
-      // TODO: replace with fetch('/api/search', { method:'POST', body: JSON.stringify(q) })...
+
+    // Submit handlers: collect form data and reload page with GET params
+    ['form-person', 'form-registration'].forEach((id) => {
+      const form = document.getElementById(id);
+      if (!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = collectFormData(e.currentTarget);
+        const params = new URLSearchParams();
+        Object.entries(data).forEach(([k, v]) => {
+          // handle simple values; FormData helper already omits empty values
+          params.append(k, String(v));
+        });
+        const newUrl = location.pathname + (params.toString() ? '?' + params.toString() : '');
+        location.href = newUrl;
+      });
     });
 
-    document.getElementById('form-advanced').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const q = collectFormData(e.currentTarget);
-      showResults('Performed advanced search', [`Query: ${JSON.stringify(q)}`]);
-    });
   </script>
