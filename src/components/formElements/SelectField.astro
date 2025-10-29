@@ -1,0 +1,20 @@
+---
+const {
+    label,
+    name,
+    options = [],
+    value = "",
+    placeholder = "Select...",
+    required = false,
+} = Astro.props;
+
+---
+<div class="form-field">
+    <label for={name}>{label}</label>
+    <select name={name} id={name} required={required}>
+        {placeholder ? <option value="" disabled selected={value === ""}>{placeholder}</option> : null}
+        {options.map((opt: { value: string | number | string[] | null | undefined; label: unknown; }) => (
+            <option value={opt.value} selected={opt.value === value}>{opt.label}</option>
+        ))}
+    </select>
+</div>    

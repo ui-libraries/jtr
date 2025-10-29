@@ -1,0 +1,36 @@
+---
+import TextField from './formElements/TextField.astro';
+import SelectField from './formElements/SelectField.astro';
+import DateField from './formElements/DateField.astro';
+import FormActions from './formElements/FormActions.astro';
+
+import { getCountySelectOptions } from '../scripts/get_counties.js';
+
+const { params } = Astro.props;
+const minDate = new Date('1750-01-01');
+const maxDate = new Date('1865-12-31');
+
+const counties = await getCountySelectOptions();
+const modernCounties = await getCountySelectOptions('modern');
+---
+
+<form id="form-registration" class="search-form">
+    <input type="hidden" name="query" value="full_registration" />
+
+    <div class="form-row">
+        <TextField name="registered_name" label="Name of registered person" placeholder="Full or partial name" />
+    </div>
+    <div class="form-row">
+        <TextField name="enslaver_name" label="Name of enslaver" placeholder="Full or partial name" />
+    </div>
+    <div class="form-row">
+        <DateField name="before_date" label="Before Date" min={minDate} max={maxDate} />
+        <DateField name="after_date" label="After Date" min={minDate} max={maxDate} />
+    </div>
+    <div class="form-row">
+        <SelectField name="county" label="County (historical)" options={counties} placeholder="Select County" />
+        <SelectField name="modern_county" label="County (modern)" options={modernCounties} placeholder="Select Modern County" />
+    </div>
+
+    <FormActions />
+</form>

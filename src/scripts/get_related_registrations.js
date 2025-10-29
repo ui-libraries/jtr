@@ -4,6 +4,7 @@
 // and returns a single flattened array of all records.
 //
 
+import { getApiData } from './db_helpers.js';
 
 export default async function getRelatedRegistrations(id, role) {
     if (!id) throw new Error('id is required');
@@ -87,14 +88,7 @@ export async function getRegistrationsByRegid(id) {
      return data;
 }
 
-async function getApiData(query) {
-    const apiBase = 'https://s-lib024.lib.uiowa.edu/ajtr/api.php/records/';
-    const url = `${apiBase}${query}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.records;
 
-}
 
 /*async function fetchAndTag(id, join) {
     const apiBase = `https://s-lib024.lib.uiowa.edu/ajtr/api.php/records/persons?filter=pid,eq,${id}&join=`;

@@ -1,0 +1,47 @@
+---
+import TextField from './formElements/TextField.astro';
+import SelectField from './formElements/SelectField.astro';
+import FormActions from './formElements/FormActions.astro';
+
+const sex = [
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' },
+    { label: 'Unknown', value: 'Unknown' },
+    { label: 'Unspecified', value: 'Unspecified' }
+];
+
+const race = [
+    { label: 'Black', value: 'Black' },
+    { label: 'Multiracial', value: 'Multiracial' },
+    { label: 'Indigenous', value: 'Indigenous' },
+    { label: 'White', value: 'White' },
+    { label: 'Unknown', value: 'Unknown' }
+];
+
+const role = [
+    { label: 'Registered Person', value: 'Registered Person' },
+    { label: 'Enslaver', value: 'Enslaver' },
+    { label: 'Registrant', value: 'Registrant' }
+];
+
+const { params } = Astro.props;
+
+---
+
+<form id="form-person" class="search-form">
+    <input type="hidden" name="query" value="persons" />
+    <div class="form-row">
+        <TextField name="name" label="Name" placeholder="Full or partial name" />
+    </div>
+    <div class="form-row">
+        <SelectField name="role" label="Role" options={role} placeholder="Select Role" />
+    </div>
+    <div class="form-row">
+        <SelectField name="imp_sex" label="Imputed Sex" options={sex} placeholder="Select Sex" />
+    </div>
+    <div class="form-row">
+        <SelectField name="norm_race" label="Normalized Race" options={race} placeholder="Select Race" />
+    </div>
+
+    <FormActions />
+</form>

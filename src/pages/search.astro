@@ -1,62 +1,31 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import PersonSearch from '../components/PersonSearch.astro';
+import RegistrationSearch from '../components/RegistrationSearch.astro';
 
 const pageTitle = "A Just and True Return: Search";
+
+const searchParams =  {};
 
 ---
 
 <PageLayout pageTitle={pageTitle}>
   <h1>Search</h1>
 
-    <section class="tabbed-search box">
+    <section class="tabbed-search">
 
       <div role="tablist" class="tabs" aria-label="Search mode">
-        <button id="tab-person" role="tab" aria-controls="panel-person" aria-selected="true">Search People</button>
-        <button id="tab-registration" role="tab" aria-controls="panel-registration" aria-selected="false">Search Registrations</button>
+        <button id="tab-registration" role="tab" aria-controls="panel-registration" aria-selected="true">Search Registrations</button>
+        <button id="tab-person" role="tab" aria-controls="panel-person" aria-selected="false">Search People</button>
       </div>
 
-      <div id="panel-person" class="tab-panel" role="tabpanel" aria-labelledby="tab-person" aria-hidden="false">
-        <form id="form-person" class="search-form">
-          <div class="form-row">
-            <input type="search" name="q" placeholder="Enter keywords, e.g. 'return of the native'" aria-label="Simple search keywords" required />
-            <select name="scope" aria-label="Scope">
-              <option value="all">All fields</option>
-              <option value="title">Title</option>
-              <option value="author">Author</option>
-            </select>
-          </div>
-          <div class="form-actions">
-            <button type="submit">Search</button>
-            <button type="reset">Reset</button>
-          </div>
-        </form>
+      <div id="panel-registration" class="tab-panel" role="tabpanel" aria-labelledby="tab-registration" aria-hidden="false">
+          <RegistrationSearch params={searchParams} />
       </div>
 
-      <div id="panel-registration" class="tab-panel" role="tabpanel" aria-labelledby="tab-registration" aria-hidden="true">
-        <form id="form-registration" class="search-form">
-          <div class="form-row">
-            <input type="text" name="title" placeholder="Title" aria-label="Title" />
-            <input type="text" name="author" placeholder="Author" aria-label="Author" />
-          </div>
-          <div class="form-row">
-            <input type="number" name="year" placeholder="Year" aria-label="Year" min="0" />
-            <select name="format" aria-label="Format">
-              <option value="">Any format</option>
-              <option>Article</option>
-              <option>Book</option>
-              <option>Thesis</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <input type="text" name="keywords" placeholder="Additional keywords (comma separated)" aria-label="Keywords" />
-          </div>
-          <div class="form-actions">
-            <button type="submit">Search</button>
-            <button type="reset">Reset</button>
-          </div>
-        </form>
+      <div id="panel-person" class="tab-panel" role="tabpanel" aria-labelledby="tab-person" aria-hidden="true">
+          <PersonSearch params={searchParams} />
       </div>
-
 
     </section>
 
