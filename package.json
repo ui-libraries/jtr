@@ -11,6 +11,8 @@
   "dependencies": {
     "astro": "^5.15.1",
     "bootstrap": "^5.3.8",
+    "fuse.js": "^7.1.0",
+    "remark-sub-super": "^1.0.21",
     "sass": "^1.93.2"
   }
 }

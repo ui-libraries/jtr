@@ -1,0 +1,5 @@
+---
+const { tag } = Astro.props;
+---
+
+<span class="tag-info badge bg-secondary"><a href=`../tag?id=${tag.tag_id}`>{tag.name}</a></span>

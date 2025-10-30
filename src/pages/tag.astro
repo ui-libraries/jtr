@@ -1,13 +1,28 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import RegistrationResult from '../components/registration/RegistrationResult.astro';
+
+import { getTags, getRegsWithTag } from '../scripts/get_tags.js';
+
+const url = Astro.url
+const idParam = url.searchParams.get('id');
+const id = idParam ? idParam : '0';
+const tagData = await getTags(id);
+const tag = tagData[0];
+const regs = await getRegsWithTag(tag.tag_id);
+console.log(regs);
+
 
 const pageTitle = "A Just and True Return";
 
 ---
 
 <PageLayout pageTitle={pageTitle}>
-  <h1>Tag name</h1>
-  <!-- create Layouts and hook in API calls:
-   RegistrationStub -->
+  <h1>Tag: {tag.name}</h1>
+
+  {regs.map((registration: unknown) => (
+        <RegistrationResult registration={registration} />
+      ))}
+          
 
 </PageLayout>

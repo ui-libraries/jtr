@@ -88,36 +88,11 @@ export async function getRegistrationsByRegid(id) {
      return data;
 }
 
+export async function getRegViewByRegid(id) {
+   const data = await getApiData(`full_registration?filter=regid,eq,${id}`);
 
+     return data;
+}
 
-/*async function fetchAndTag(id, join) {
-    const apiBase = `https://s-lib024.lib.uiowa.edu/ajtr/api.php/records/persons?filter=pid,eq,${id}&join=`;
-    const url = apiBase + join;
-    const response = await fetch(url);
-    const data = await response.json();
-    const registrations = data.records[0].registered;
-
-    let results = [];
-
-    for (let r of registrations) {
-        let current = {};
-        current.regid = r.regid.regid;
-        current.old_regid = r.regid.old_regid;
-        if (current.registered_pid === id) current.role = "Registered Person's Mother" || "Registered Person";
-        current.name_recorded = r.name_as_recorded;
-        current.race_recorded = r.race;
-        current.mother_name = r.mother_name;
-        current.mother_race = r.mother_race;
-    }
-
-
-        //Name as recorded
-        //Race as recorded
-        // Registered enslaver
-        //date
-        //county
-        results.push(current);
-
-    }*/
 
 

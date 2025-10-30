@@ -3,6 +3,7 @@
 // Search-related functions
 
 import { getApiData } from './db_helpers.js';
+import Fuse from 'fuse.js';
 
 // Search persons by name (partial match).
 export async function runSearch(params) {

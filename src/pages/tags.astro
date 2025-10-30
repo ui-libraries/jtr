@@ -1,13 +1,21 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import TagLink from '../components/TagLink.astro';
+
+import { getTags } from '../scripts/get_tags.js'
 
 const pageTitle = "A Just and True Return: Tags";
+
+const tags = await getTags();
+console.log(tags);
 
 ---
 
 <PageLayout pageTitle={pageTitle}>
   <h1>Browse by tag</h1>
-      <!-- create Layouts and hook in API calls:
-   TagIndex -->
+     {tags.map((tag: unknown) => (
+              <TagLink tag={tag} />
+            ))}
+
 
 </PageLayout>

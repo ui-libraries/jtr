@@ -5,8 +5,15 @@ import Transcript from './Transcript.astro';
 import RegisteredPerson from './RegisteredPerson.astro';
 import Enslaver from './Enslaver.astro';   
 import PersonLink from '../person/PersonLink.astro'; 
+import TagLink from '../TagLink.astro'; 
+
+
+import { getTagsForRegistration } from '../../scripts/get_tags';    
 
 const { registration } = Astro.props;
+
+const tags = await getTagsForRegistration(registration.regid);
+
 ---
 
 <div id="registration" class="container-fluid mt-5">
@@ -28,7 +35,9 @@ const { registration } = Astro.props;
         <p><strong>County (Historical):</strong> {registration.county}</p>
         <p><strong>County (modern):</strong> {registration.modern_county}</p>
         <p><strong>Residence:</strong> {registration.residence}</p>
-        <p><strong>Tags:</strong> Complete fxn</p>
+        <p><strong>Tags:</strong>     {tags.map((tag: unknown) => (
+              tag.tag_id !== null ? <TagLink tag={tag.tag_id} /> : null
+            ))} </p>
 
 
     </div>
