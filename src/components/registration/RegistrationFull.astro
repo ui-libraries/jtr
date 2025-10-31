@@ -35,7 +35,7 @@ const tags = await getTagsForRegistration(registration.regid);
         <p><strong>County (Historical):</strong> {registration.county}</p>
         <p><strong>County (modern):</strong> {registration.modern_county}</p>
         <p><strong>Residence:</strong> {registration.residence}</p>
-        <p><strong>Tags:</strong>     {tags.map((tag: unknown) => (
+        <p><strong>Tags:</strong>     {tags.map((tag) => (
               tag.tag_id !== null ? <TagLink tag={tag.tag_id} /> : null
             ))} </p>
 
