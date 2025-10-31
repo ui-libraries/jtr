@@ -15,12 +15,24 @@ body {
 
 p {
     font-family: typography.$base-font-family;
+    font-size: larger;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+    font-family: typography.$base-font-family;
+    font-weight: bold; 
+}
+
+h2, h3, h4, h5, h6 {
     font-family: typography.$base-font-family;
     color: colors.$secondary-accent;
     font-weight: bold;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-size: 1.3em;
+    margin: 1.5em 0;
 }
 
 a {
@@ -32,6 +44,25 @@ hr {
     height: 2px;
     background-color: colors.$breaker-color;
     margin: 20px 0;
+}
+
+.tag-info.badge {
+
+    margin: 5px;
+    border-radius:0;
+    background-color: colors.$primary-accent;
+    padding: 10px;
+
+    a {
+        color: white; 
+        text-decoration: none; 
+        font-size: large;
+        font-weight:normal;
+    }
+
+    :hover, :active {
+        text-decoration:underline;
+    }
 }
 
 /* Nav Styles */
@@ -52,6 +83,50 @@ hr {
 
 /* Page Styles */
 
+#banner-overlay {
+    background: rgba(255, 255, 255, .75);
+    margin-top:1em;
+    margin-left:1em;
+    padding:1em;
+    max-width: 380px;
+
+    p {
+        font-style: italic;
+        font-weight: 600;
+    }
+}
+
+#banner-caption {
+    background-color: black;
+    color: white;
+    padding: .5em 1.5em;
+    font-style: italic;
+    font-size: small;
+    margin-bottom: 2em;
+
+    p { font-family:Arial, Helvetica, sans-serif; }
+    a { color: white;}
+}
+
+.nav-tile {
+     height:150px;
+     background-color: colors.$primary-accent;
+     text-align: center;
+     padding: 1em;
+    color: white;
+    text-transform: uppercase;
+    font-weight:bold;
+    font-size:1.3em;
+    text-decoration:none;
+
+    :hover, :active {
+        text-decoration:underline;
+    }
+
+    p { width:100%; }
+
+}
+
 #person-profile, #registration {
     h1 {
         padding-left:2.5rem;
@@ -66,11 +141,7 @@ hr {
     line-height: 1;
     margin-bottom: 2rem;
 
-    h2 {
-        text-transform: uppercase;
-        font-size: large;
-        margin: 1.5em 0;
-    }
+
 
     h3 {
         font-size: 1.4rem;
