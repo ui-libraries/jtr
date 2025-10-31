@@ -9,7 +9,6 @@ const { person } = Astro.props;
 const familyList = await getFamilyList(person.pid, person.family);
 
 const registrations = await getRelatedRegistrations(person.pid, person.role);
-console.log(registrations); 
 ---
 
 <div id="person-profile" class="container-fluid mt-5">

@@ -59,11 +59,11 @@ const pageTitle = "A Just and True Return: Search";
         
         {searchResults && searchResults.length > 0 ? (
           searchParams?.query === 'persons' ? (
-            searchResults.map((person) => (
+            searchResults.map((person: unknown) => (
               <PersonResult person={person} />
             ))
           ) : (
-            searchResults.map((registration) => (
+            searchResults.map((registration: unknown) => (
               <RegistrationResult registration={registration} />
             ))
           )

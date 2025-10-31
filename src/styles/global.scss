@@ -34,6 +34,22 @@ hr {
     margin: 20px 0;
 }
 
+/* Nav Styles */
+
+.navbar {
+    padding: 1em 1em 0;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#nav-centered {
+    display: flex;
+    justify-content:center;
+}
+
 /* Page Styles */
 
 #person-profile, #registration {
