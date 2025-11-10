@@ -1,8 +1,21 @@
 ---
 import DashboardBigNumber from './DashboardBigNumber.astro';
+
+import { getDashInfo } from '../scripts/functions.js';
+
+const dashInfo = await getDashInfo();
+const data = dashInfo.regsPerYear;
 ---
 
 <div id="overview-dashboard" class="w-100 p-3">
+    <div class="d-flex justify-content-between mb-3">
+
+        <DashboardBigNumber divId="registration-count" label="Registrations" number={dashInfo.totalRegistrations} />
+        <DashboardBigNumber divId="people-count" label="People" number={ dashInfo.totalPersons }/>
+        <DashboardBigNumber divId="county-rep-count" label="Counties Represented" number={ dashInfo.totalCounties } />
+        <DashboardBigNumber divId="transcription-count" label="Registrations Transcribed" number="?" />
+        
+    </div>
         
    <div style="display: flex; justify-content: center; align-items: center;">                       
             <div id="registration-bars" class="flex-fill text-center"></div>
@@ -11,13 +24,59 @@ import DashboardBigNumber from './DashboardBigNumber.astro';
         <p class="dash-label">Registrations by year</p>
     </div>
     
-    <div class="d-flex justify-content-between mb-3">
 
-        <DashboardBigNumber divId="registration-count" label="Registrations" number="?" />
-        <DashboardBigNumber divId="people-count" label="People" number="?" />
-        <DashboardBigNumber divId="county-rep-count" label="Counties Represented" number="?" />
-        <DashboardBigNumber divId="transcription-count" label="Registrations Transcribed" number="?" />
-        
-    </div>
     
 </div>
+
+<script type="module" src="https://d3js.org/d3.v7.min.js"></script>
+<script define:vars={{ data }}>
+    //set dimensions and margins for the chart
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const margin = {top: 20, right: 20, bottom: 40, left: 20},
+            width = 1000 - margin.left - margin.right,
+            height = 220 - margin.top - margin.bottom;
+
+       const svgBars = d3.select("#registration-bars")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // Set up scales
+        const x = d3.scaleBand()
+            .domain(data.map((d) => d[0]))
+            .range([0, width])
+            .padding(0.1);
+
+        const y = d3.scaleLinear()
+            //.domain([0, d3.max(data, (d) => d[1])])
+            .domain([0, d3.max(data, (d) => d[1])])
+            .nice()
+            .range([height, 0]);
+
+        // Add x-axis with a tick every ten years
+        svgBars.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x)
+                .tickValues(data.map((d) => d[0]).filter((year) => year % 5 === 0)));
+
+        svgBars.selectAll(".tick text")
+            .style("font-size", "14px");
+
+        
+            // draw bars
+        svgBars.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", (d) => x(d[0]))
+            .attr("y", (d) => y(d[1]))
+            .attr("width", x.bandwidth())
+            .attr("height", (d) => height - y(d[1]))
+            .attr("fill", "#536B76");
+    });
+            
+</script>

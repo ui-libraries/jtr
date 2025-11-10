@@ -1,0 +1,76 @@
+---
+import { getCountyCounts } from '../scripts/functions.js';
+
+
+const countyCounts = await getCountyCounts();
+console.log('County Counts fetched in Map.astro:', countyCounts);
+---
+
+<div id="county-map">
+
+</div>
+
+ 
+<script define:vars={{ countyCounts }}>
+ document.addEventListener("DOMContentLoaded", () => {   
+
+    console.log('County Counts:', countyCounts);
+    const colorScale = d3.scaleSequential(d3.interpolateOrRd)
+        .domain([0, Math.pow(d3.max(counts, d => d.count), 0.5)]);
+        
+    // Create a map projection
+    const projection = d3.geoMercator()
+        .center([-77.8, 41.0]) // Center on Pennsylvania
+        .scale(8000) // Adjust scale as needed
+        .translate([400, 300]); // Adjust translation as needed
+
+    // Create a path generator
+    const path = d3.geoPath().projection(projection);
+
+    // Create an SVG element to hold the map
+    const svg = d3.select("#county-map")
+        .append("svg")
+        .attr("width", 900)
+        .attr("height", 620);
+
+        // Filter the data to include only features for Pennsylvania
+        const paFeatures = data.features.filter(feature => feature.properties.STATEFP === "42"); // "42" is the FIPS code for Pennsylvania
+
+        // Add the counts to their corresponding counties in paFeatures
+        paFeatures.forEach(feature => {
+            const countyData = counts.find(county => county.county === feature.properties.NAME);
+            feature.properties.REGS = countyData ? countyData.count : 0; // Add REGS property or default to 0
+        });
+
+    // Draw the counties
+    svg.selectAll("path")
+        .data(paFeatures)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .attr("fill", d => colorScale(d.properties.REGS))
+        .attr("stroke", "#bbb")
+        .on("mouseover", function(event, d) {
+            d3.select(this).attr("fill", d3.color(d3.select(this).attr("fill")).darker(0.5));
+        })
+        .on("mouseout", function(event, d) {
+            d3.select(this).attr("fill", colorScale(d.properties.REGS));
+        })
+        .on("click", function(event, d) {
+            const countyName = d.properties.NAME; // Adjust based on your GeoJSON properties
+            window.location.href = `search.html?records=registrations&modern_county=${countyName}`; // Redirect to county page with query parameter
+        });
+
+        // Add labels for each county
+        svg.selectAll("text")
+            .data(paFeatures)
+            .enter()
+            .append("text")
+            .attr("x", d => projection(d3.geoCentroid(d))[0])
+            .attr("y", d => projection(d3.geoCentroid(d))[1])
+            .attr("text-anchor", "middle")
+            .attr("font-size", "10px")
+            .attr("fill", "black")
+            .text(d => d.properties.NAME);
+});
+</script>

@@ -1,9 +1,8 @@
 ---
 
 import Family from './Family.astro';
-import getFamilyList from '../../scripts/get_family_list.js';
 import RegOnPerson from '../registration/RegOnPerson.astro';
-import getRelatedRegistrations from '../../scripts/get_related_registrations';
+import { getFamilyList, getRelatedRegistrations } from '../../scripts/functions.js';
 
 const { person } = Astro.props;
 const familyList = await getFamilyList(person.pid, person.family);

@@ -5,7 +5,7 @@ import RegistrationSearch from '../components/RegistrationSearch.astro';
 import PersonResult from '../components/person/PersonResult.astro';
 import RegistrationResult from '../components/registration/RegistrationResult.astro';
 
-import { runSearch } from '../scripts/search.js';
+import { runSearch } from '../scripts/functions.js';
 
 // Parse URL search params
 const url = (typeof Astro !== 'undefined' && Astro?.request) ? new URL(Astro.request.url) : null;

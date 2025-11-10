@@ -1,6 +1,6 @@
 // jtr/src/scripts/get_counties.js
 
-import { getApiData } from './db_helpers.js';
+import getApiData from './db_helpers.js';
 
 
 // Get county select options for search forms.
@@ -21,6 +21,7 @@ export async function getCountySelectOptions(version='historic') {
 // Not checked yet!!!
 // Get counts of registrations per county.
 export async function getCountyCounts(version='modern') {
+    console.log('Getting county counts for version:', version);
     const counties = await getAllCounties(version);
     const counts = counties
         .map(r => r[field])
@@ -37,7 +38,8 @@ export async function getCountyCounts(version='modern') {
 }
 
 // Helper: fetch all county names.
-async function getAllCounties(version='historic') {
+export async function getAllCounties(version='historic') {
+    console.log('in secondary, fetching:', version);
     const field = version === 'historic' ? 'county' : 'modern_county';
     const records = await getApiData(`registrations?include=${field}`);
     return records;

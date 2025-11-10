@@ -3,7 +3,7 @@
 
 
 /* Given a query string, fetch data from the AJTR API and return the records array */
-export async function getApiData(query) {
+export default async function getApiData(query) {
     const apiBase = 'https://s-lib024.lib.uiowa.edu/ajtr/api.php/records/';
     const url = `${apiBase}${query}`;
     const response = await fetch(url);
