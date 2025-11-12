@@ -2,8 +2,7 @@
 import { getCountyCounts } from '../scripts/functions.js';
 
 
-const countyCounts = await getCountyCounts();
-console.log('County Counts fetched in Map.astro:', countyCounts);
+let counts = await getCountyCounts();
 ---
 
 <div id="county-map">
@@ -11,11 +10,24 @@ console.log('County Counts fetched in Map.astro:', countyCounts);
 </div>
 
  
-<script define:vars={{ countyCounts }}>
+<script define:vars={{ counts }}>
  document.addEventListener("DOMContentLoaded", () => {   
 
-    console.log('County Counts:', countyCounts);
-    const colorScale = d3.scaleSequential(d3.interpolateOrRd)
+    fetch("https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson")
+        .then(response => response.json())
+        .then(data => {
+            const paFeatures = data.features.filter(feature => feature.properties.STATEFP === "42"); // "42" is the FIPS code for Pennsylvania
+
+            // Add the counts to their corresponding counties in paFeatures
+            paFeatures.forEach(feature => {
+                const countyData = counts.find(county => county.county === feature.properties.NAME);
+                feature.properties.REGS = countyData ? countyData.count : 0; // Add REGS property or default to 0
+            });
+
+            console.log('PA Features with counts:', paFeatures);
+
+            console.log('County Counts after dom load:', counts);
+    const colorScale = d3.scaleSequential(d3.interpolatePuBuGn)
         .domain([0, Math.pow(d3.max(counts, d => d.count), 0.5)]);
         
     // Create a map projection
@@ -33,14 +45,14 @@ console.log('County Counts fetched in Map.astro:', countyCounts);
         .attr("width", 900)
         .attr("height", 620);
 
-        // Filter the data to include only features for Pennsylvania
-        const paFeatures = data.features.filter(feature => feature.properties.STATEFP === "42"); // "42" is the FIPS code for Pennsylvania
+    // Filter the data to include only features for Pennsylvania
+  //  const paFeatures = data.features.filter(feature => feature.properties.STATEFP === "42"); // "42" is the FIPS code for Pennsylvania
 
-        // Add the counts to their corresponding counties in paFeatures
-        paFeatures.forEach(feature => {
-            const countyData = counts.find(county => county.county === feature.properties.NAME);
-            feature.properties.REGS = countyData ? countyData.count : 0; // Add REGS property or default to 0
-        });
+    // Add the counts to their corresponding counties in paFeatures
+    paFeatures.forEach(feature => {
+        const countyData = counts.find(county => county.county === feature.properties.NAME);
+        feature.properties.REGS = countyData ? countyData.count : 0; // Add REGS property or default to 0
+    });
 
     // Draw the counties
     svg.selectAll("path")
@@ -49,7 +61,7 @@ console.log('County Counts fetched in Map.astro:', countyCounts);
         .append("path")
         .attr("d", path)
         .attr("fill", d => colorScale(d.properties.REGS))
-        .attr("stroke", "#bbb")
+        .attr("stroke", "#fff")
         .on("mouseover", function(event, d) {
             d3.select(this).attr("fill", d3.color(d3.select(this).attr("fill")).darker(0.5));
         })
@@ -72,5 +84,9 @@ console.log('County Counts fetched in Map.astro:', countyCounts);
             .attr("font-size", "10px")
             .attr("fill", "black")
             .text(d => d.properties.NAME);
+        })
+        .catch(error => console.error("Error fetching GeoJSON data:", error));
+
+    
 });
 </script>

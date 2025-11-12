@@ -33,7 +33,6 @@ export async function getCountySelectOptions(version='historic') {
 // Not checked yet!!!
 // Get counts of registrations per county.
 export async function getCountyCounts(version='modern') {
-    console.log('Getting county counts for version:', version);
     const counties = await getAllCounties(version);
     const field = version === 'historic' ? 'county' : 'modern_county';
 
