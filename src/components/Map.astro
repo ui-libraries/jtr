@@ -70,7 +70,7 @@ let counts = await getCountyCounts();
         })
         .on("click", function(event, d) {
             const countyName = d.properties.NAME; // Adjust based on your GeoJSON properties
-            window.location.href = `search.html?records=registrations&modern_county=${countyName}`; // Redirect to county page with query parameter
+            window.location.href = `search.html?query=full_registration&modern_county=${countyName}`; // Redirect to county page with query parameter
         });
 
         // Add labels for each county
