@@ -14,8 +14,6 @@ const { registration } = Astro.props;
 
 const tags = await getTagsForRegistration(registration.regid);
 
-
-
 ---
 
 <div id="registration" class="container-fluid mt-5">
@@ -61,18 +59,17 @@ const tags = await getTagsForRegistration(registration.regid);
         ))}
     </div>
 
-    <!--{registration.registration_md != null && (-->
+    {registration.registration_md != null && (
         <div id="registration-transcript" class="sidestripe-left">
             <h2>Registration Transcript</h2>
-            <!-- <Transcript transcript={registration.registration_md} />-->
-            <Transcript transcript={'registrations/'+ registration.old_regid +'_registration'} />
+            <Transcript transcript={'registrations/'+ registration.registration_md} />
         </div>
-   <!-- )}--> 
+    )} 
 
     {registration.return_md != null && (
     <div id="return-transcript" class="sidestripe-left">
         <h2>Return Transcript</h2>
-            <Transcript transcript={registration.return} />
+            <Transcript transcript={'returns/'+ registration.return_md} />
     </div>
     )}
 
