@@ -1,6 +1,6 @@
 // jtr/src/scripts/get_family_list.js
 
-export default async function getFamilyList(pid, data) {
+export async function getFamilyList(pid, data) {
 
     if (!Array.isArray(data)) return [];
 
