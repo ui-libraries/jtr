@@ -197,6 +197,7 @@ export async function getRegViewByRegid(id) {
 
 // Search persons by name (partial match).
 export async function runSearch(params) {
+    console.log('in search fxn with params:', params);
    let query = params.query + "?";
 
    const paramOps = [
@@ -218,15 +219,50 @@ export async function runSearch(params) {
             query += `&filter=${op.field},${op.operator},${encodeURIComponent(val)}`;
         }
     }
+    console.log('Search query:', query);
+    const results = await getApiData(query);
 
-   const results = await getApiData(query);
+    //if a name is provided, sort by relevancy 
+    if (params.registered_name || params.enslaver_name || params.name) {
+        console.log('Sorting by relevancy');
+        const labels = [
+            { label: 'registered_name', value: params.registered_name },
+            { label: 'enslaver_name', value: params.enslaver_name },
+            { label: 'name', value: params.name }
+        ].filter(item => item.value && item.value.trim() !== '');
+
+        const rankedResults = await relevancySort(results, labels);
+        return rankedResults;
+    }
    return results;
 }
 
-
+import Fuse from 'fuse.js';
 //Sort records by relevancy to search term (not implemented yet)
-async function relevancySort(records, searchTerm) {
-    //const term = searchTerm.toLowerCase();
+async function relevancySort(records, terms) {
+    const fuseOptions = {
+        useExtendedSearch: true,
+        ignoreDiacritics: true,
+        threshold: 0.9
+    };
+
+    const results = [];
+
+    for (const { label, value } of terms) {
+        if (!value || !value.trim()) continue;
+
+        const fuse = new Fuse(records, { ...fuseOptions, keys: [label] });
+        const searchResults = fuse.search(value).map(result => result.item);
+
+        // Add results to the final list, avoiding duplicates
+        for (const item of searchResults) {
+            if (!results.includes(item)) {
+                results.push(item);
+            }
+        }
+    }
+
+    return results;
 }
 
 /*******************************************************************************************

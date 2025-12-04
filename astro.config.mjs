@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
-// https://astro.build/config
+//import supersub from 'remark-supersub';
 
 export default defineConfig({
-  output: 'server', // Enables SSR
+  output: 'server',
   markdown: {
+   // remarkPlugins: [supersub],
   },
-}); 
+});

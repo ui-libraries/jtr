@@ -5,6 +5,11 @@ const { transcript } = Astro.props;
 import { getEntry, render } from 'astro:content';
 
 const entry = await getEntry('docs', transcript);
+
+if (!entry) {
+    throw new Error(`Entry not found for transcript: ${transcript}`);
+}
+
 const { Content } = await render(entry);
 
 ---
