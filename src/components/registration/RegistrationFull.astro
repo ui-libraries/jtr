@@ -75,7 +75,15 @@ const tags = await getTagsForRegistration(registration.regid);
 
     <div id="sources" class="sidestripe-left">
         <h2>Sources</h2>
-        <p><strong>Registry Sources</strong>: {registration.registry_sources}</p>
+        <p><strong>Registry Sources</strong></p>
+        <ul>
+            {registration.registry_sources.split(';').map((source: string) => (
+            <li>{source.trim()}</li>
+            ))}
+        </ul>
+
+
+
         {registration.ext_primary_sources && String(registration.ext_primary_sources).trim() !== "" && (
             <p><strong>Additional Primary Sources</strong>: {registration.ext_primary_sources}</p>
         )}

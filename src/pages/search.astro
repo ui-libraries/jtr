@@ -1,4 +1,7 @@
 ---
+
+export const prerender = false;
+
 import PageLayout from '../layouts/PageLayout.astro';
 import PersonSearch from '../components/PersonSearch.astro';
 import RegistrationSearch from '../components/RegistrationSearch.astro';
@@ -21,8 +24,6 @@ if (runSearchOnLoad) {
   try {
     searchResults = await runSearch(searchParams);
     resultCount = (searchResults && Array.isArray(searchResults)) ? searchResults.length : 0;
-    console.log('Search results:', searchResults);
-
   } catch (err) {
     console.log('Search error:', err);
   }

@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import PageLayout from '../layouts/PageLayout.astro';
 import TagLink from '../components/TagLink.astro';
 
@@ -7,7 +9,6 @@ import { getTags } from '../scripts/functions.js'
 const pageTitle = "A Just and True Return: Tags";
 
 const tags = await getTags();
-console.log(tags);
 
 ---
 

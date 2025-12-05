@@ -68,7 +68,7 @@ export async function getDashInfo() {
     const people = await getApiData('persons');
     dashInfo.totalPersons = people.length;
 
-    const regs = await getApiData('registrations?include=regid,iso_date,modern_county');
+    const regs = await getApiData('registrations?include=regid,iso_date,modern_county,registration_md');
     dashInfo.totalRegistrations = regs.length;
 
     const countiesSet = new Set();
@@ -78,6 +78,8 @@ export async function getDashInfo() {
         }   
     });
     dashInfo.totalCounties = countiesSet.size;
+
+    dashInfo.transcriptions = regs.filter(r => r.registration_md && r.registration_md.trim() !== '').length;
 
     //transform registrations per year for chart
 
@@ -197,7 +199,6 @@ export async function getRegViewByRegid(id) {
 
 // Search persons by name (partial match).
 export async function runSearch(params) {
-    console.log('in search fxn with params:', params);
    let query = params.query + "?";
 
    const paramOps = [
@@ -219,12 +220,10 @@ export async function runSearch(params) {
             query += `&filter=${op.field},${op.operator},${encodeURIComponent(val)}`;
         }
     }
-    console.log('Search query:', query);
     const results = await getApiData(query);
 
     //if a name is provided, sort by relevancy 
     if (params.registered_name || params.enslaver_name || params.name) {
-        console.log('Sorting by relevancy');
         const labels = [
             { label: 'registered_name', value: params.registered_name },
             { label: 'enslaver_name', value: params.enslaver_name },
@@ -324,11 +323,9 @@ export async function getTags(id = '') {
 
 // Get all tags related to a registration.
 export async function getTagsForRegistration(rid) {
-    console.log(rid);
     
     let query = `taglink?filter=entity_id,eq,${rid}&join=tags`;
     const data = await getApiData(query);
-    console.log(data);
     return data;
 
 }
