@@ -109,7 +109,6 @@ export async function getRelatedRegistrations(id, role) {
 
     let rids = [];
     if (role === "Enslaver" || role === "Registrant") {
-        
         const recRegistrant = await getApiData(`persons?filter=pid,eq,${id}&join=registrations`);
         const regsR = recRegistrant[0].registrations;
         const recEnslaver = await getApiData(`persons?filter=pid,eq,${id}&join=enslaving`);
@@ -141,14 +140,14 @@ export async function getRelatedRegistrations(id, role) {
             }
         }
         rids = Array.from(mergedMap.values());
-    } else if (role === "Registered Person" || role === "Registered Person's Mother") {
+    } else if (role === "Registered Person" || role === "Mother of Registered Person") {
         const records = await getApiData(`persons?filter=pid,eq,${id}&join=registered`);
         const regs = records[0].registered;
 
         for (let r of regs) {
             const current = {};
             current.regid = r.regid;
-            current.role = (r.registered_pid === id) ? "Registered Person" : "Registered Person's Mother";
+            current.role = (r.registered_pid === id) ? "Registered Person" : "Mother of Registered Person";
             rids.push(current);
         }
 
@@ -320,6 +319,32 @@ export async function getTags(id = '') {
     return data;
 } 
 
+// Get all tags related to a person.
+export async function getTagsForPerson(id) {
+    
+    let query = `taglink?filter=entity_id,eq,${id}&join=tags`;
+    const data = await getApiData(query);
+    return data;
+
+}
+
+// Get all people with a given tag.
+export async function getPersonsWithTag(id){
+    let query = `taglink?filter=tag_id,eq,${id}`;
+    const personids = await getApiData(query); 
+    let persons = [];
+    let promises = [];
+
+    personids.forEach(personid => {
+        const promise = getApiData(`persons?filter=pid,eq,${personid.entity_id}`).then(result => {
+            persons.push(result[0]);
+        });
+        promises.push(promise);
+    });
+
+    await Promise.all(promises);        
+    return persons;
+}
 
 // Get all tags related to a registration.
 export async function getTagsForRegistration(rid) {

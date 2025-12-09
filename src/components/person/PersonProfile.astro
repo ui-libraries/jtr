@@ -2,12 +2,17 @@
 
 import Family from './Family.astro';
 import RegOnPerson from '../registration/RegOnPerson.astro';
-import { getFamilyList, getRelatedRegistrations } from '../../scripts/functions.js';
+import TagLink from '../TagLink.astro';
+import { getFamilyList, getRelatedRegistrations, getTagsForPerson } from '../../scripts/functions.js';
 
 const { person } = Astro.props;
 const familyList = await getFamilyList(person.pid, person.family);
 
 const registrations = await getRelatedRegistrations(person.pid, person.role);
+
+const tags = await getTagsForPerson(person.pid);
+console.log('Tags for person', person.pid, tags);
+
 ---
 
 <div id="person-profile" class="container-fluid mt-5">
@@ -20,6 +25,15 @@ const registrations = await getRelatedRegistrations(person.pid, person.role);
         <p><strong>Imputed Sex:</strong> {person.imp_sex}</p>
         <p><strong>Imputed Race:</strong> {person.norm_race}</p>
         <p><strong>Date of Birth:</strong> {person.dob}</p>
+
+        {(tags && tags.length > 0) && (
+            <div id="tags">
+                <h2>Tags</h2>
+                {tags.map((tag: { tag_id: unknown; }) => (
+              tag.tag_id !== null ? <TagLink tag={tag.tag_id} /> : null
+            ))}
+            </div>
+        )}
 
     </div>
 

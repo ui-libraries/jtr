@@ -107,14 +107,9 @@ hr {
     border-radius: 0;
     
 
-    a.dropdown-item, {
+    a.dropdown-item {
         color: white;
         background-color: transparent;
-
-        :hover, :focus, :active {
-            text-decoration: underline;
-            background-color: transparent;
-        }
     }
 
     a.dropdown-item.active {

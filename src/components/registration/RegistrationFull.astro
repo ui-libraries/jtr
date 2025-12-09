@@ -5,14 +5,14 @@ import Transcript from './Transcript.astro';
 import RegisteredPerson from './RegisteredPerson.astro';
 import Enslaver from './Enslaver.astro';   
 import PersonLink from '../person/PersonLink.astro'; 
-import TagLink from '../TagLink.astro'; 
+//import TagLink from '../TagLink.astro'; 
 
 
-import { getTagsForRegistration } from '../../scripts/functions.js';    
+//import { getTagsForRegistration } from '../../scripts/functions.js';    
 
 const { registration } = Astro.props;
 
-const tags = await getTagsForRegistration(registration.regid);
+//const tags = await getTagsForRegistration(registration.regid);
 
 ---
 
@@ -35,9 +35,9 @@ const tags = await getTagsForRegistration(registration.regid);
         <p><strong>County:</strong> {registration.county}</p>
         <p><strong>County (modern):</strong> {registration.modern_county}</p>
         <p><strong>Residence:</strong> {registration.residence}</p>
-        <p><strong>Tags:</strong>     {tags.map((tag: { tag_id: unknown; }) => (
+       <!-- <p><strong>Tags:</strong>     {tags.map((tag: { tag_id: unknown; }) => (
               tag.tag_id !== null ? <TagLink tag={tag.tag_id} /> : null
-            ))} </p>
+            ))} </p>--> 
 
 
     </div>
