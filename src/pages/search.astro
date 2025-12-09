@@ -39,8 +39,8 @@ const pageTitle = "A Just and True Return: Search";
     <section class="tabbed-search">
 
       <div role="tablist" class="tabs" aria-label="Search mode">
-        <button id="tab-registration" role="tab" aria-controls="panel-registration" aria-selected={searchParams?.query === 'persons' ? 'false' : 'true'}>Search Registrations</button>
-        <button id="tab-person" role="tab" aria-controls="panel-person" aria-selected={searchParams?.query === 'persons' ? 'true' : 'false'}>Search People</button>
+        <button id="tab-registration" role="tab" aria-controls="panel-registration" aria-selected={searchParams?.query === 'persons' ? 'false' : 'true'}>Registrations</button>
+        <button id="tab-person" role="tab" aria-controls="panel-person" aria-selected={searchParams?.query === 'persons' ? 'true' : 'false'}>People</button>
       </div>
 
       <div id="panel-registration" class="tab-panel" role="tabpanel" aria-labelledby="tab-registration" aria-hidden={searchParams?.query === 'persons' ? 'true' : 'false'}>

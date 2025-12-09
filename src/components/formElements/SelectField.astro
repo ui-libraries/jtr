@@ -10,7 +10,7 @@ const {
 
 ---
 <div class="form-field">
-    <label for={name}>{label}</label>
+    <label for={name}><strong>{label}</strong></label><br />
     <select name={name} id={name} required={required}>
         {placeholder ? <option value="" disabled selected={value === ""}>{placeholder}</option> : null}
         {options.map((opt: { value: string | number | string[] | null | undefined; label: unknown; }) => (

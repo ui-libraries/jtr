@@ -28,8 +28,8 @@ const modernCounties = await getCountySelectOptions('modern');
         <DateField name="after_date" label="After Date" min={minDate} max={maxDate} value={params?.after_date ?? ''} />
     </div>
     <div class="form-row">
-        <SelectField name="county" label="County (historical)" options={counties} placeholder="Select County" value={params?.county ?? ''} />
-        <SelectField name="modern_county" label="County (modern)" options={modernCounties} placeholder="Select Modern County" value={params?.modern_county ?? ''} />
+        <SelectField name="county" label="County" options={counties} placeholder="Select County" value={params?.county ?? ''} />
+        <SelectField name="modern_county" label="Modern County" options={modernCounties} placeholder="Select Modern County" value={params?.modern_county ?? ''} />
     </div>
 
     <FormActions />

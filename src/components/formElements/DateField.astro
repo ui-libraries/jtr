@@ -51,9 +51,9 @@ const describedBy = (help || error) ? `${inputId}-help` : undefined;
 ---
 <div class={`date-field ${className} ${error ? 'has-error' : ''}`}>
     {label ? (
-        <label for={inputId} class="date-label">
+        <label for={inputId} class="date-label"><strong>
             {label}{required ? <span aria-hidden="true" class="required-star"> *</span> : null}
-        </label>
+        </strong></label>
     ) : null}
 
     <input
@@ -80,13 +80,8 @@ const describedBy = (help || error) ? `${inputId}-help` : undefined;
         display: flex;
         flex-direction: column;
         gap: 6px;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
 
-    .date-label {
-        font-size: 0.9rem;
-        color: #111827;
-    }
 
     .required-star {
         color: #b91c1c;
@@ -96,16 +91,12 @@ const describedBy = (help || error) ? `${inputId}-help` : undefined;
     .date-input {
         padding: 0.5rem 0.6rem;
         border: 1px solid #d1d5db;
-        border-radius: 6px;
-        font-size: 0.95rem;
         background: white;
-        color: #111827;
     }
 
     .date-input:focus {
         outline: none;
         box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
-        border-color: #3b82f6;
     }
 
     .date-help {

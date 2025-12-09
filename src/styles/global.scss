@@ -7,7 +7,7 @@
 
 /* Global styles */
 
-body {
+html, body {
     font-family: typography.$base-font-family;
     margin: 0;
     padding: 0;
@@ -67,21 +67,88 @@ hr {
 
 /* Nav Styles */
 
-.navbar {
-    padding: 1em 1em 0;
-}
+
 
 .navbar-brand {
     font-size: 2rem;
     font-weight: bold;
+
+    @media (max-width: 576px) {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+}
+
+.navbar-toggler {
+    text-align: center;
+    margin-right:auto;
+    margin-left:auto;
+
+    
 }
 
 #nav-centered {
     display: flex;
     justify-content:center;
+    flex-wrap:wrap;
+
+    .btn.show, .btn {
+        color:colors.$primary-accent;
+
+        :hover, :active, :focus {
+            color:colors.$primary-accent;
+            text-decoration: underline;
+        }
+    }
 }
 
+.dropdown-menu {
+    background-color: colors.$primary-accent;
+    border-radius: 0;
+    
+
+    a.dropdown-item, {
+        color: white;
+        background-color: transparent;
+
+        :hover, :focus, :active {
+            text-decoration: underline;
+            background-color: transparent;
+        }
+    }
+
+    a.dropdown-item.active {
+        text-decoration: underline;
+        background-color: transparent;
+    }
+    
+}
+
+
+.nav-item a, .nav-link, .dropdown-toggle {
+    margin: 0 1em;
+    font-weight:800;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: colors.$primary-accent;
+
+    &:hover, &:active {
+        text-decoration: underline;
+    }
+}
+
+#navbarDropdownMenuLink {
+    background-color:#fff;
+    border:none;
+    padding:8px;
+}
+
+
 /* Page Styles */
+
+.banner {
+    flex: 1 1 100%;
+}
 
 #banner-overlay {
     background: rgba(255, 255, 255, .75);
@@ -127,6 +194,8 @@ hr {
 
 }
 
+
+
 #person-profile, #registration {
     h1 {
         padding-left:2.5rem;
@@ -153,9 +222,35 @@ hr {
 
 /* Dashboard Styles */
 
+
 .big-number {
     font-size: 3rem;
     color: colors.$secondary-accent;
+}
+
+.bn-row {
+    max-width: 99%;
+        flex-wrap: wrap;
+
+}
+
+.big-number-container {
+    max-width:100px;
+    margin: 0 1rem;
+}
+
+#bars-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+
+}
+
+@media (max-width: 768px) {
+    #bars-container {
+        display: none;
+    }
 }
 
 /* Map Styles */
@@ -178,17 +273,70 @@ hr {
 /* Search Form Styles */
 
 .tabbed-search {
-         border: 1px solid #ddd; padding: 1rem; border-radius: 6px; background: #fff; 
-        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-        .tabs button {
-          background: #f5f5f5; border: 1px solid #ddd; padding: 0.5rem 0.75rem; border-radius: 4px; cursor: pointer;
+    font-size: larger;
+
+        .tabs { display: flex; gap: 0.5rem; 
         }
-        .tabs button[aria-selected="true"] { background: #0078d4; color: white; border-color: #0078d4; }
-        .tab-panel { display: none; }
-        .tab-panel[aria-hidden="false"] { display: block; }
-        .form-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
-        .form-row input, .form-row select { flex: 1; padding: 0.4rem; border: 1px solid #ccc; border-radius: 4px; }
-        .form-actions { display:flex; gap:0.5rem; }
+        .tabs button {
+          background: colors.$primary-accent; 
+          color: #fff;
+          text-transform:uppercase;
+          font-weight: bold;
+          border: 2px solid colors.$primary-accent;
+          border-bottom:none; 
+          padding: 0.75rem 2rem;  
+          cursor: pointer;
+        }
+        .tabs button[aria-selected="true"] { 
+            background: #fff; 
+            color: colors.$primary-accent; 
+            border-bottom: 2px solid #fff;
+        }
+        .tab-panel { 
+            display: none; 
+            border: 2px solid colors.$primary-accent;
+            padding: 2rem;
+            margin-top:-2px;
+        }
+        .tab-panel[aria-hidden="false"] { 
+            display: block; 
+        }
+        .form-row { 
+            display: flex; 
+            gap: 1rem; 
+            margin-bottom: 1.5rem; 
+        }
+        .form-row input, .form-row select { 
+            flex: 1; padding: 0.4rem; 
+            border: 2px solid colors.$primary-accent;
+        }
+        .form-actions { 
+            display:flex; 
+            gap:1rem; 
+            
+            button {
+                padding: 0.5rem 1.5rem;
+                text-transform:uppercase;
+                font-weight: 400;
+                border: 2px solid colors.$primary-accent;
+                color: white;
+                background: colors.$primary-accent;
+                cursor: pointer;
+
+                &:hover {
+                    background: white;
+                    color: colors.$primary-accent;
+                    text-decoration: underline;
+                }
+            }
+
+                button.reverse {
+                    background: white;
+                    color: colors.$primary-accent;
+
+           
+        }
+    }
 }
 
 
