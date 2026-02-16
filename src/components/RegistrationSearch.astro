@@ -12,6 +12,8 @@ const maxDate = new Date('1865-12-31');
 
 const counties = await getCountySelectOptions();
 const modernCounties = await getCountySelectOptions('modern');
+
+const defaultDate = new Date(1780, 2, 1); // May 1, 1780 (month is 0-indexed)
 ---
 
 <form id="form-registration" class="search-form">
@@ -24,11 +26,11 @@ const modernCounties = await getCountySelectOptions('modern');
         <TextField name="enslaver_name" label="Name of enslaver" placeholder="Full or partial name" value={params?.enslaver_name ?? ''} />
     </div>
     <div class="form-row">
-        <DateField name="before_date" label="Before Date" min={minDate} max={maxDate} value={params?.before_date ?? ''} />
-        <DateField name="after_date" label="After Date" min={minDate} max={maxDate} value={params?.after_date ?? ''} />
+       <DateField name="after_date" label="After Date" min={minDate} max={maxDate} value={params?.after_date ?? defaultDate} />
+       <DateField name="before_date" label="Before Date" min={minDate} max={maxDate} value={params?.before_date ?? defaultDate} />        
     </div>
     <div class="form-row">
-        <SelectField name="county" label="County" options={counties} placeholder="Select County" value={params?.county ?? ''} />
+        <SelectField name="county" label="Historical County" options={counties} placeholder="Select Historical County" value={params?.county ?? ''} />
         <SelectField name="modern_county" label="Modern County" options={modernCounties} placeholder="Select Modern County" value={params?.modern_county ?? ''} />
     </div>
 

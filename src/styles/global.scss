@@ -148,18 +148,23 @@ hr {
 
 .banner {
     flex: 1 1 100%;
+    justify-content: flex-end;
 }
 
 #banner-overlay {
     background: rgba(255, 255, 255, .75);
-    margin-top:1em;
-    margin-left:1em;
-    padding:1em;
+    vertical-align: bottom;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 1em;
+    padding:.5em 1em;
     max-width: 380px;
 
     p {
         font-style: italic;
+        text-align: center;
         font-weight: 600;
+        margin-bottom:0;
     }
 }
 
@@ -348,4 +353,8 @@ hr {
         border:1px solid #ccc;
         padding: 10px;
     }
+}
+
+.transcript p {
+    line-height: normal;
 }

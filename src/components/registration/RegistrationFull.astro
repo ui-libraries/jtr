@@ -28,7 +28,7 @@ const { registration } = Astro.props;
          String(registration.registrant2_pid).trim() !== "" &&
          String(registration.registrant2_pid) !== "0" && (
             <>
-                , <PersonLink name={registration.registrant2_name} pid={registration.registrant2_pid} />
+            , <PersonLink name={registration.registrant2_name} pid={registration.registrant2_pid} />
             </>
         )}
         </p>
@@ -47,6 +47,7 @@ const { registration } = Astro.props;
             <p><i>Details given are as recorded in the registration.</i></p>
         {(registration.registered || []).map((person: unknown) => (
             <RegisteredPerson person={person} />
+            <br />
         ))}
 
     </div>
@@ -56,22 +57,24 @@ const { registration } = Astro.props;
             <p><i>Details given are as recorded in the registration.</i></p>
         {(registration.enslaving || []).map((person: unknown) => (
             <Enslaver person={person} />
+            <br/>
         ))}
     </div>
 
-    {registration.registration_md != null && (
-        <div id="registration-transcript" class="sidestripe-left">
-            <h2>Registration Transcript</h2>
-            <Transcript transcript={'registrations/'+ registration.registration_md} />
-        </div>
-    )} 
-
-    {registration.return_md != null && (
+        {registration.return_md != null && (
     <div id="return-transcript" class="sidestripe-left">
         <h2>Return Transcript</h2>
             <Transcript transcript={'returns/'+ registration.return_md} />
     </div>
     )}
+    {registration.registration_md != null && (
+        <div id="registration-transcript" class="sidestripe-left">
+            <h2>Registry Transcript</h2>
+            <Transcript transcript={'registrations/'+ registration.registration_md} />
+        </div>
+    )} 
+
+
 
     <div id="sources" class="sidestripe-left">
         <h2>Sources</h2>

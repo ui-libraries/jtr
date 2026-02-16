@@ -120,4 +120,18 @@ const pageTitle = "A Just and True Return: Search";
       });
     });
 
+    // Reset handlers: clear search params and reload page
+    ['form-person', 'form-registration'].forEach((id) => {
+      const form = document.getElementById(id);
+      if (!form) return;
+      form.addEventListener('reset', () => {
+      const searchResults = document.getElementById('search-results');
+      if (searchResults) {
+        const activeTab = document.querySelector('[role="tab"][aria-selected="true"]');
+        location.href = location.pathname;
+        activeTab?.setAttribute('aria-selected', 'true');
+      }
+      });
+    });
+
   </script>

@@ -7,6 +7,13 @@ export async function getApiData(query) {
     const url = `${apiBase}${query}`;
     const response = await fetch(url);
     const data = await response.json();
+
+    if (!Array.isArray(data.records)) {
+        return [];
+    }
+    data.records = data.records.filter(record => {
+        return !(record.pid === 0 || record.regid === 0);
+    });
     return data.records;
 
 }

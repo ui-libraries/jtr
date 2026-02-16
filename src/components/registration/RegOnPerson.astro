@@ -10,7 +10,7 @@ const { registration } = Astro.props;
 
     {registration.registered?.map((person: { name_as_recorded: unknown; registered_pid: unknown; }, i: number) => (
         <>
-            {i > 0 && ', '}
+            {i > 0 && '| '}
             <PersonLink name={person.name_as_recorded} pid={person.registered_pid} />
         </>
     ))}
