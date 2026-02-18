@@ -24,12 +24,14 @@ let counts = await getCountyCounts();
                 feature.properties.REGS = countyData ? countyData.count : 0; // Add REGS property or default to 0
             });
 
-            console.log('PA Features with counts:', paFeatures);
+    //set color scale for counties based on registration counts
+    const thresholds = [1, 10, 25, 100, 250, 500, 1000];
+    const colors = ["#BDBDBD", "#D5DEE1", "#BAC8CE", "#A0B2BB", "#859DA8", "#6A8795", "#536B76"];
 
-            console.log('County Counts after dom load:', counts);
-    const colorScale = d3.scaleSequential(d3.interpolatePuBuGn)
-        .domain([0, Math.pow(d3.max(counts, d => d.count), 0.5)]);
-        
+    const colorScale = d3.scaleThreshold()
+        .domain(thresholds)
+        .range(colors);
+
     // Create a map projection
     const projection = d3.geoMercator()
         .center([-77.8, 41.0]) // Center on Pennsylvania
@@ -44,15 +46,6 @@ let counts = await getCountyCounts();
         .append("svg")
         .attr("width", 900)
         .attr("height", 620);
-
-    // Filter the data to include only features for Pennsylvania
-  //  const paFeatures = data.features.filter(feature => feature.properties.STATEFP === "42"); // "42" is the FIPS code for Pennsylvania
-
-    // Add the counts to their corresponding counties in paFeatures
-    paFeatures.forEach(feature => {
-        const countyData = counts.find(county => county.county === feature.properties.NAME);
-        feature.properties.REGS = countyData ? countyData.count : 0; // Add REGS property or default to 0
-    });
 
     // Draw the counties
     svg.selectAll("path")
@@ -84,9 +77,26 @@ let counts = await getCountyCounts();
             .attr("font-size", "10px")
             .attr("fill", "black")
             .text(d => d.properties.NAME);
+
+        
+        //Create legend 
+        svg.append("g")
+            .attr("class", "legendQuant")
+            .attr("transform", "translate(800,10)");
+        
+        var legend = d3.legendColor()
+            .labelFormat(d3.format(".0f"))
+            .labels(d3.legendHelpers.thresholdLabels)
+            //.useClass(true)
+            .scale(colorScale)
+
+        svg.select(".legendQuant")
+            .call(legend);
         })
         .catch(error => console.error("Error fetching GeoJSON data:", error));
 
+
+   
     
 });
 </script>
