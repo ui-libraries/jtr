@@ -1,5 +1,10 @@
 ---
 const { name, pid } = Astro.props;
+const displayName = name?.trim() ? name : "Not recorded";
 ---
 
-<a href={`../person?pid=${pid}`}>{name}</a>
+{pid ? (
+    <a href={`../person?pid=${pid}`}>{displayName}</a>
+) : (
+    <span>{displayName}</span>
+)}

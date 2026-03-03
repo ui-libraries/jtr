@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate:transcriptions": "node scripts/generate-transcriptions-json.mjs"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.1",

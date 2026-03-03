@@ -1,25 +1,20 @@
 ---
+import { getEntry } from 'astro:content';
 
 const { transcript } = Astro.props;
-
-import { getEntry, render } from 'astro:content';
-
-const entry = await getEntry('docs', transcript);
-
-if (!entry) {
-    throw new Error(`Entry not found for transcript: ${transcript}`);
-}
-
-const { Content } = await render(entry);
+const mydoc = await getEntry('docs', transcript);
 
 ---
 
+
+
+
 <div class="transcript container">
     <div class="row">
-
         <div class="col-md-8">
             <div>
-                <Content />
+                {mydoc ? <div set:html={mydoc.data.body} /> : <div>No transcript for this document type.</div>}
+                    
             </div>
         </div>
     </div>

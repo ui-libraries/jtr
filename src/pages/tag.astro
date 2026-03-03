@@ -21,6 +21,11 @@ const pageTitle = "A Just and True Return";
 <PageLayout pageTitle={pageTitle}>
   <h1>Tag: {tag.name}</h1>
 
+
+    <p>{tag.description}</p>
+
+    <br />
+
   <p>{persons.length} result(s) found.</p>
 
   {persons.map((person: unknown) => (

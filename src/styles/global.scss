@@ -16,6 +16,7 @@ html, body {
 p, ul, ol {
     font-family: typography.$base-font-family;
     font-size: larger;
+    line-height: normal;
 }
 
 h1 {
@@ -148,21 +149,17 @@ hr {
 
 .banner {
     flex: 1 1 100%;
-    justify-content: flex-end;
 }
 
 #banner-overlay {
     background: rgba(255, 255, 255, .75);
-    vertical-align: bottom;
-    margin-left:auto;
-    margin-right:auto;
-    margin-bottom: 1em;
+    margin-left:2em;
+    margin-top: 2em;
     padding:.5em 1em;
-    max-width: 380px;
+    max-width: 400px;
 
     p {
         font-style: italic;
-        text-align: center;
         font-weight: 600;
         margin-bottom:0;
     }
@@ -171,7 +168,8 @@ hr {
 #banner-caption {
     background-color: black;
     color: white;
-    padding: .5em 1.5em;
+    padding: 1.5em 1.5em 0.2em;
+    text-align:center;
     font-style: italic;
     font-size: small;
     margin-bottom: 2em;
@@ -230,7 +228,14 @@ hr {
 
 .big-number {
     font-size: 3rem;
+    a {
     color: colors.$secondary-accent;
+    text-decoration: none;
+
+    &:hover, &:active {
+        text-decoration: underline;
+    }
+}
 }
 
 .bn-row {
@@ -349,9 +354,26 @@ hr {
 
 .transcript table {
     margin: 1rem 0;
+        border-collapse: collapse;
     th, td {
         border:1px solid #ccc;
         padding: 10px;
+    }
+
+   tr:first-child th,  tr:first-child td {
+        border-top: none;
+    }
+
+    td:first-child, th:first-child {
+        border-left: none;
+    }
+
+    td:last-child, th:last-child {
+        border-right: none;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
     }
 }
 

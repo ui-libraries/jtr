@@ -5,6 +5,7 @@ import Transcript from './Transcript.astro';
 import RegisteredPerson from './RegisteredPerson.astro';
 import Enslaver from './Enslaver.astro';   
 import PersonLink from '../person/PersonLink.astro'; 
+import { onPageLoad } from 'astro/virtual-modules/transitions-events.js';
 //import TagLink from '../TagLink.astro'; 
 
 
@@ -61,6 +62,19 @@ const { registration } = Astro.props;
         ))}
     </div>
 
+    {registration.has_transcript && (
+
+        <div id="return-transcript" class="sidestripe-left">
+            <h2>Return Transcript</h2>
+            <Transcript transcript={registration.old_regid + '_return'} />
+        </div>
+     
+       <div id="registry-transcript" class="sidestripe-left">
+            <h2>Registry Transcript</h2>
+            <Transcript transcript={registration.old_regid + '_registry'} />
+        </div>
+    )}
+<!-- Markdown vsn
         {registration.return_md != null && (
     <div id="return-transcript" class="sidestripe-left">
         <h2>Return Transcript</h2>
@@ -73,16 +87,19 @@ const { registration } = Astro.props;
             <Transcript transcript={'registrations/'+ registration.registration_md} />
         </div>
     )} 
-
+-->
 
 
     <div id="sources" class="sidestripe-left">
         <h2>Sources</h2>
         <p><strong>Registry Sources</strong></p>
         <ul>
-            {registration.registry_sources.split(';').map((source: string) => (
-            <li>{source.trim()}</li>
-            ))}
+            {registration.registry_sources.split(';').map((source: string, index: number) => {
+            const sourceType = registration.source_type.split(';')[index]?.trim() || '';
+            return (
+                <li><strong>{sourceType.charAt(0).toUpperCase() + sourceType.slice(1)}</strong>: {source.trim()}</li>
+            );
+            })}
         </ul>
 
 

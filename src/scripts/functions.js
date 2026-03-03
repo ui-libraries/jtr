@@ -206,6 +206,7 @@ export async function getRegViewByRegid(id) {
 // Search persons by name (partial match).
 export async function runSearch(params) {
    let query = params.query + "?";
+   console.log('Search params:', params);
 
    const paramOps = [
         { field: 'registered_name', value: params.registered_name, operator: 'ma' },
@@ -238,6 +239,13 @@ export async function runSearch(params) {
 
         const rankedResults = await relevancySort(results, labels);
         return rankedResults;
+    } else {
+        if (params.query === 'persons') {
+            return results.sort((a, b) => a.associated_county.localeCompare(b.associated_county));
+        } else if (params.query === 'full_registration') {
+            return results.sort((a, b) => a.old_regid.localeCompare(b.old_regid));
+        }
+
     }
    return results;
 }

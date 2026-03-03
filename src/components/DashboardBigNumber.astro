@@ -1,8 +1,8 @@
 ---
-const { divId, label, number } = Astro.props;
+const { divId, label, number, link } = Astro.props;
 ---
 
 <div id={divId} class="text-center big-number-container">
-    <p class="big-number">{number}</p>
+    <p class="big-number"><a href={link}>{number}</a></p>
     <p class="dash-label">{label}</p>
 </div>
