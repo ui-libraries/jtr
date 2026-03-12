@@ -2,6 +2,7 @@
 import TextField from './formElements/TextField.astro';
 import SelectField from './formElements/SelectField.astro';
 import DateField from './formElements/DateField.astro';
+import CheckboxField from './formElements/CheckboxField.astro';
 import FormActions from './formElements/FormActions.astro';
 
 import { getCountySelectOptions } from '../scripts/functions.js';
@@ -25,12 +26,15 @@ const modernCounties = await getCountySelectOptions('modern');
         <TextField name="enslaver_name" label="Name of enslaver" placeholder="Full or partial name" value={params?.enslaver_name ?? ''} />
     </div>
     <div class="form-row">
-       <DateField name="after_date" label="After Date" min={minDate} max={maxDate} value={minDate} />
-       <DateField name="before_date" label="Before Date" min={minDate} max={maxDate} value={maxDate} />        
+       <DateField name="after_date" label="After Date" min={minDate} max={maxDate} value={params?.after_date ?? minDate} />
+       <DateField name="before_date" label="Before Date" min={minDate} max={maxDate} value={params?.before_date ?? maxDate} />        
     </div>
     <div class="form-row">
         <SelectField name="county" label="Historical County" options={counties} placeholder="Select Historical County" value={params?.county ?? ''} />
         <SelectField name="modern_county" label="Modern County" options={modernCounties} placeholder="Select Modern County" value={params?.modern_county ?? ''} />
+    </div>
+    <div class="form-row">
+        <CheckboxField name="has_transcript" label="Only show registrations with transcriptions" value={1} checked={params?.has_transcript === 1} />
     </div>
 
     <FormActions />

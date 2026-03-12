@@ -78,20 +78,72 @@ const pageTitle = "A Just and True Return: Search";
 
 
   <script type="module">
-    // Tab switching
+    // Tab switching with hash support
     const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    
+    // Map tab IDs to hash anchors
+    const tabHashMap = {
+      'tab-registration': 'registrations',
+      'tab-person': 'persons'
+    };
+    
+    const hashTabMap = {
+      'registrations': 'tab-registration',
+      'persons': 'tab-person'
+    };
+    
+    // Function to activate a specific tab
+    function activateTab(tabElement) {
+      tabs.forEach(t => {
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        const selected = t === tabElement;
+        t.setAttribute('aria-selected', String(selected));
+        if (panel) {
+          panel.setAttribute('aria-hidden', String(!selected));
+        }
+      });
+      
+      // Update URL hash without triggering hash change listener immediately
+      const hash = tabHashMap[tabElement.id];
+      if (hash && window.location.hash !== '#' + hash) {
+        window.history.replaceState(null, '', '#' + hash);
+      }
+    }
+    
+    // Handle tab clicks
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        tabs.forEach(t => {
-          const panel = document.getElementById(t.getAttribute('aria-controls'));
-          const selected = t === tab;
-          t.setAttribute('aria-selected', String(selected));
-          if (panel) {
-            panel.setAttribute('aria-hidden', String(!selected));
-          }
-        });
+        activateTab(tab);
       });
     });
+    
+    // Handle hash changes (including browser back/forward)
+    function handleHashChange() {
+      const hash = window.location.hash.slice(1); // Remove the # symbol
+      const tabId = hashTabMap[hash];
+      
+      if (tabId) {
+        const tabElement = document.getElementById(tabId);
+        if (tabElement) {
+          tabs.forEach(t => {
+            const panel = document.getElementById(t.getAttribute('aria-controls'));
+            const selected = t === tabElement;
+            t.setAttribute('aria-selected', String(selected));
+            if (panel) {
+              panel.setAttribute('aria-hidden', String(!selected));
+            }
+          });
+        }
+      }
+    }
+    
+    // Listen for hash changes (browser back/forward, etc.)
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Handle initial page load - check if there's a hash in the URL
+    if (window.location.hash) {
+      handleHashChange();
+    }
 
     function collectFormData(form) {
       const fd = new FormData(form);
@@ -125,12 +177,9 @@ const pageTitle = "A Just and True Return: Search";
       const form = document.getElementById(id);
       if (!form) return;
       form.addEventListener('reset', () => {
-      const searchResults = document.getElementById('search-results');
-      if (searchResults) {
         const activeTab = document.querySelector('[role="tab"][aria-selected="true"]');
-        location.href = location.pathname;
-        activeTab?.setAttribute('aria-selected', 'true');
-      }
+        const hash = activeTab ? tabHashMap[activeTab.id] : 'registrations';
+        location.href = location.pathname + '#' + hash;
       });
     });
 

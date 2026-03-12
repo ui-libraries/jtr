@@ -75,7 +75,7 @@ export async function getDashInfo() {
     const people = await getApiData('persons');
     dashInfo.totalPersons = people.length;
 
-    const regs = await getApiData('registrations?include=regid,iso_date,modern_county,registration_md');
+    const regs = await getApiData('registrations?include=regid,iso_date,modern_county,has_transcript');
     dashInfo.totalRegistrations = regs.length;
 
     const countiesSet = new Set();
@@ -86,7 +86,7 @@ export async function getDashInfo() {
     });
     dashInfo.totalCounties = countiesSet.size;
 
-    dashInfo.transcriptions = regs.filter(r => r.registration_md && r.registration_md.trim() !== '').length;
+    dashInfo.transcriptions = regs.filter(r => r.has_transcript === true).length;
 
     //transform registrations per year for chart
 
@@ -215,6 +215,7 @@ export async function runSearch(params) {
         { field: 'iso_date', value: params.before_date, operator: 'lt' },
         { field: 'county', value: params.county, operator: 'eq' },
         { field: 'modern_county', value: params.modern_county, operator: 'eq' },
+        { field: 'has_transcript', value: params.has_transcript, operator: 'eq' },
         { field: 'name', value: params.name, operator: 'ma' },
         { field: 'imp_sex', value: params.imp_sex, operator: 'eq' },
         { field: 'norm_race', value: params.norm_race, operator: 'eq' },

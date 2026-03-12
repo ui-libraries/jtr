@@ -71,6 +71,16 @@ hr {
     }
 }
 
+.alert {
+    color: colors.$primary-accent;
+    background-color: #D5DEE1;
+    font-weight: bold;
+    padding: 0.5em 1em;
+    border-radius: 0;
+    display: inline-block;
+    margin-top: 1em;
+}
+
 /* Nav Styles */
 
 
