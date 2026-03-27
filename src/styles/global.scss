@@ -109,7 +109,7 @@ hr {
     flex-wrap:wrap;
 
     .btn.show, .btn {
-        color:colors.$primary-accent;
+        
 
         :hover, :active, :focus {
             color:colors.$primary-accent;
@@ -126,6 +126,7 @@ hr {
     a.dropdown-item {
         color: white;
         background-color: transparent;
+        font-weight:normal;
     }
 
     a.dropdown-item.active {
@@ -138,17 +139,22 @@ hr {
 
 .nav-item a, .nav-link, .dropdown-toggle {
     margin: 0 1em;
-    font-weight:800;
+    font-weight:600;
     font-size: 1.2rem;
     text-transform: uppercase;
     color: colors.$primary-accent;
 
-    &:hover, &:active {
+    &:hover, &:active{
         text-decoration: underline;
+        color:white !important;
     }
 }
 
-#navbarDropdownMenuLink {
+.dropdown-toggle.show {
+    color: white;
+}
+
+.navbar-dropdown-link {
     background-color:#fff;
     border:none;
     padding:8px;

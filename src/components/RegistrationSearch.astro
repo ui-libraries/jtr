@@ -26,8 +26,8 @@ const modernCounties = await getCountySelectOptions('modern');
         <TextField name="enslaver_name" label="Name of enslaver" placeholder="Full or partial name" value={params?.enslaver_name ?? ''} />
     </div>
     <div class="form-row">
-       <DateField name="after_date" label="After Date" min={minDate} max={maxDate}  />
-       <DateField name="before_date" label="Before Date" min={minDate} max={maxDate}  />        
+       <DateField name="after_date" label="After Date" min={minDate} max={maxDate}  value={params?.after_date ?? ''}/>
+       <DateField name="before_date" label="Before Date" min={minDate} max={maxDate} value={params?.before_date ?? ''} />        
     </div>
     <div class="form-row">
         <SelectField name="county" label="Historical County" options={counties} placeholder="Select Historical County" value={params?.county ?? ''} />

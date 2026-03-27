@@ -1,0 +1,75 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+const pageTitle = "A Just and True Return: About";
+
+---
+
+<PageLayout pageTitle={pageTitle}>
+  <h1>Data Dictionary</h1>
+
+<p>A Just and True Return (JTR) presents data from Pennsylvania’s surviving county slave registrations, meaning that the project replicates the shortcomings of their sources. Since an incomplete registration could be deemed defective, generating a cause of action for a registered person to sue for freedom, our team has tried not to obscure this fact by supplying missing data from other sources unless otherwise noted. </p>
+
+<p>JTR utilizes the following vocabulary, organized by appearance on various pages: </p>
+
+<h2>Sitewide</h2>
+<ul>
+  <li><strong>registration</strong>: The generic term for the event in which an enslaver claimed a registered person as their property in accordance with Pennsylvania’s gradual abolition law.</li>
+  <li><strong>return</strong>: The specific term for the document that an enslaver produced when they claimed a registered person or persons as their property in accordance with Pennsylvania’s gradual abolition law.</li>
+  <li><strong>registry</strong>: The specific term for the record of returns maintained by county officials in accordance with Pennsylvania’s gradual abolition law.</li>
+  <li><strong>transcript</strong>: The specific term for copies of clerk registries produced after the fact and which may introduce transcription errors into the data.</li>
+  <li><strong>publication</strong>: The specific term for published summaries of slave registrations which are typically the least detailed of any surviving records.</li>
+</ul>
+
+<h2>Search</h2>
+
+<h3>Registrations</h3>
+<ul>
+  <li><strong>registered person</strong>: A person of African (or, in a few instances, Native American) descent claimed by another as property. JTR uses “registered person” in lieu of “enslaved person” or “unfree person” to acknowledge that some registered people were legally free, either at the moment of their registration or because of a defective registration.</li>
+  <li><strong>enslaver</strong>: A person who claimed someone as property through a registration.</li>
+  <li><strong>historical county</strong>: The historical county in which an historical event occurred. This may or may not be the same as the modern county, as county borders changed over time.</li>
+  <li><strong>modern county</strong>: The modern county in which an historical event occurred. This may or may not be the same as the historical county, as county borders changed over time.</li>
+</ul>
+
+<h3>People</h3>
+<ul>
+  <li><strong>imputed sex</strong>: A person’s sex suggested by their name. JTR adds this field to better facilitate searching.</li>
+  <li><strong>normalized race</strong>: A person’s race in modern parlance. JTR adds this field to better facilitate searching.</li>
+</ul>
+
+<h2>Registration pages</h2>
+
+<h3>Registration Details</h3>
+<ul>
+  <li><strong>registration ID</strong>: A unique identifier given to each registration in the database. Typically a four-letter county code followed by a four-digit number, these are occasionally subdivided with a final letter in cases where multiple registrations appear as part of the same original document.</li>
+  <li><strong>date</strong>: The date when the enslaver or registrant registered the person(s) they claimed as their property. For some registrations, only the year is known.</li>
+  <li><strong>registrant</strong>: The person who delivered the return to the county clerk. This is often, but not always, the enslaver.</li>
+  <li><strong>residence</strong>: The most specific location associated with a registered person and their enslaver.</li>
+</ul>
+
+<h3>Registered Individual(s)</h3>
+
+<ul>
+  <li><strong>date of birth</strong>: A registered person’s birth information according to a registration stated as precisely as possible from year to month to date. JTR will state when this attribute is “unspecified” because failure to supply age made a registration defective and was technically grounds for emancipation.</li>
+  <li><strong>sex</strong>: A registered person’s sex according to a registration. JTR will state when this attribute is “unspecified” because failure to supply sex made a registration defective and was technically grounds for emancipation.</li>
+  <li><strong>race</strong>: A registered person’s race according to a registration.</li>
+  <li><strong>status</strong>: A registered person’s status according to a registration. Broadly speaking, there are three possible statuses: lifelong slave, term slave (year), and hereditary term slave (year), where year refers to the length of an enslaver’s claim. A lifelong slave is someone born before March 1, 1780, and registered in accordance with Pennsylvania’s gradual abolition law. A term slave (year) is someone not claimed for life. Children born after March 1, 1780, and registered in accordance with Pennsylvania’s gradual abolition law were bound for a minimum of twenty-eight years, but could have their terms extended as a punishment for seeking freedom or becoming pregnant. A hereditary term slave is someone registered in accordance with Pennsylvania’s gradual abolition law whose mother was not identified as a lifelong slave. It was common practice for enslavers to claim multiple generations of term slaves as their property until a state supreme court decision in 1826. </li>
+<li><strong>name of mother</strong>: A registered person’s mother’s name according to a registration. </li>
+<li><strong>race of mother</strong>: A registered person’s mother’s race according to a registration. </li>
+<li><strong>status of mother</strong>: A registered person’s mother’s status according to a registration. </li>
+<li><strong>description of mother</strong>: Details about a registered person’s mother taken directly from a registration. </li>
+</ul>
+
+<h3>Enslaver(s)</h3>
+<ul>
+  <li><strong>occupation</strong>: An enslaver’s title or profession at the time of registration. JTR will state when this attribute is “unspecified” because failure to supply occupation made a registration defective and was technically grounds for emancipation.</li>
+  <li><strong>relation to registrant</strong>: Clarifies how the registrant and enslaver were related. “Self” means they were the same person; “relative” means they shared a surname; other relations come from a registration.</li>
+</ul>
+
+<h3>Sources</h3>
+
+<ul>
+  <li><strong>registry sources</strong>: Provides one of five document categories and a complete citation. The possible document categories, from generally most to least detailed, are enslaver return, clerk registry, transcript, publication, and other.</li>
+</ul>
+
+</PageLayout>
