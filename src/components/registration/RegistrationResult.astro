@@ -8,7 +8,9 @@ console.log(registration);
     <p><strong>Registration of {registration.registered_name}</strong></p>
     <p><strong>Enslaver:</strong> {registration.enslaver_name}</p>
     <p><strong>Date of Registration:</strong> {registration.date}</p>
-    <p><strong>County:</strong> {registration.county} (Historical), {registration.modern_county} (Modern)</p>
+    <p><strong>Historical County:</strong> {registration.county} </p>
+    <p><strong>Modern County:</strong> {registration.modern_county}</p>
+
     {registration.has_transcript === true && (
         <p class="alert">
             Transcript available

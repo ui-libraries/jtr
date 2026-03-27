@@ -25,15 +25,7 @@ console.log('Tags for person', person.pid, tags);
         <p><strong>Imputed Sex:</strong> {person.imp_sex}</p>
         <p><strong>Imputed Race:</strong> {person.norm_race}</p>
         <p><strong>Date of Birth:</strong> {person.dob}</p>
-
-        {(tags && tags.length > 0) && (
-            <div id="tags">
-                <h2>Tags</h2>
-                {tags.map((tag: { tag_id: unknown; }) => (
-              tag.tag_id !== null ? <TagLink tag={tag.tag_id} /> : null
-            ))}
-            </div>
-        )}
+        <p><strong>Associated Counties:</strong> {person.associated_county}</p>
 
     </div>
 

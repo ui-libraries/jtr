@@ -1,19 +1,18 @@
 ---
 import { getEntry } from 'astro:content';
 
-const { transcript } = Astro.props;
+const { transcript, type } = Astro.props;
 const mydoc = await getEntry('docs', transcript);
 
 ---
 
-
-
-
+{mydoc && (
 <div class="transcript container">
     <div class="row">
         <div class="col-md-8">
+            <h3>{type.charAt(0).toUpperCase() + type.slice(1)}</h3>
             <div>
-                {mydoc ? <div set:html={mydoc.data.body} /> : <div>No transcript for this document type.</div>}
+                <div set:html={mydoc.data.body} />
                     
             </div>
         </div>
@@ -22,3 +21,4 @@ const mydoc = await getEntry('docs', transcript);
     
     
 </div>
+)}

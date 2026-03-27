@@ -66,6 +66,14 @@ const { params } = Astro.props;
             value={params && params.norm_race ? params.norm_race : ''}
         />
     </div>
+    <div class="form-row">
+        <TextField
+            name="associated_county"
+            label="County"
+            placeholder="Name of associated county (do not include 'County')"
+            value={params && params.associated_county ? params.associated_county : ''}
+        />  
+    </div>
 
     <FormActions />
 </form>

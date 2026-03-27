@@ -2,16 +2,16 @@
 export const prerender = false;
 
 import PageLayout from '../layouts/PageLayout.astro';
-import PersonResult from '../components/person/PersonResult.astro';
+import RegistrationResult from '../components/registration/RegistrationResult.astro';
 
-import { getTags, getPersonsWithTag } from '../scripts/functions.js';
+import { getTags, getRegsWithTag } from '../scripts/functions.js';
 
 const url = Astro.url
 const idParam = url.searchParams.get('id');
 const id = idParam ? idParam : '0';
 const tagData = await getTags(id);
 const tag = tagData[0];
-const persons = await getPersonsWithTag(tag.tag_id);
+const registrations = await getRegsWithTag(tag.tag_id);
 
 
 const pageTitle = "A Just and True Return";
@@ -26,10 +26,10 @@ const pageTitle = "A Just and True Return";
 
     <br />
 
-  <p>{persons.length} result(s) found.</p>
+  <p>{registrations.length} result(s) found.</p>
 
-  {persons.map((person: unknown) => (
-        <PersonResult person={person} />
+  {registrations.map((reg: unknown) => (
+        <RegistrationResult registration={reg} />
       ))}
           
 

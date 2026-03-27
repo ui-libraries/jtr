@@ -219,7 +219,9 @@ export async function runSearch(params) {
         { field: 'name', value: params.name, operator: 'ma' },
         { field: 'imp_sex', value: params.imp_sex, operator: 'eq' },
         { field: 'norm_race', value: params.norm_race, operator: 'eq' },
-        { field: 'role', value: params.role, operator: 'eq' }
+        { field: 'role', value: params.role, operator: 'eq' },
+        { field: 'associated_county', value: params.associated_county, operator: 'cs' }
+
    ];
 
     for (const op of paramOps) {

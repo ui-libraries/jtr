@@ -6,14 +6,14 @@ import RegisteredPerson from './RegisteredPerson.astro';
 import Enslaver from './Enslaver.astro';   
 import PersonLink from '../person/PersonLink.astro'; 
 import { onPageLoad } from 'astro/virtual-modules/transitions-events.js';
-//import TagLink from '../TagLink.astro'; 
+import TagLink from '../TagLink.astro'; 
 
 
-//import { getTagsForRegistration } from '../../scripts/functions.js';    
+import { getTagsForRegistration } from '../../scripts/functions.js';    
 
 const { registration } = Astro.props;
 
-//const tags = await getTagsForRegistration(registration.regid);
+const tags = await getTagsForRegistration(registration.regid);
 
 ---
 
@@ -33,12 +33,12 @@ const { registration } = Astro.props;
             </>
         )}
         </p>
-        <p><strong>County:</strong> {registration.county}</p>
-        <p><strong>County (modern):</strong> {registration.modern_county}</p>
+        <p><strong>Historical County:</strong> {registration.county}</p>
+        <p><strong>Modern County:</strong> {registration.modern_county}</p>
         <p><strong>Residence:</strong> {registration.residence}</p>
-       <!-- <p><strong>Tags:</strong>     {tags.map((tag: { tag_id: unknown; }) => (
+       <p><strong>Tags:</strong>     {tags.map((tag: { tag_id: unknown; }) => (
               tag.tag_id !== null ? <TagLink tag={tag.tag_id} /> : null
-            ))} </p>--> 
+            ))} </p> 
 
 
     </div>
@@ -63,16 +63,15 @@ const { registration } = Astro.props;
     </div>
 
     {registration.has_transcript && (
+        <>
+        <h2>Document Transcriptions</h2>
 
-        <div id="return-transcript" class="sidestripe-left">
-            <h2>Return Transcript</h2>
-            <Transcript transcript={registration.old_regid + '_return'} />
-        </div>
-     
-       <div id="registry-transcript" class="sidestripe-left">
-            <h2>Registry Transcript</h2>
-            <Transcript transcript={registration.old_regid + '_registry'} />
-        </div>
+        {['return', 'registry', 'transcript', 'publication', 'other'].map((type: string) => (
+            <div id={`${type}-transcript`} class="sidestripe-left">
+            <Transcript transcript={registration.old_regid + '_' + type} type={type} />
+            </div>
+        ))}
+        </>
     )}
 <!-- Markdown vsn
         {registration.return_md != null && (
