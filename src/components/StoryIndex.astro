@@ -1,0 +1,38 @@
+---
+const { currentStory } = Astro.props;
+
+const stories = [
+    {
+        id: "burnette-cuff",
+        title: "David Burnette on the Cuff Family",
+        href: "/stories/burnette-cuff"
+    },
+    {
+        id: "burnette-watson",
+        title: "David Burnette on the Watson Family",
+        href: "/stories/burnette-watson"
+    },
+    {
+        id: "mcurdy",
+        title: "Patrick McCurdy on Nasa McCurdy",
+        href: "/stories/mcurdy"
+    },
+    {
+        id: "perkins-kelley",
+        title: "Alicia Perkins on Hannah Kelley ",
+        href: "/stories/perkins-kelley"
+    }];
+---
+
+<aside class="sidebar col-md-3">
+    <h2>Descendant Stories</h2>
+    {stories.map(story => (
+        <a 
+            href={story.href}
+            class={`story-tile ${story.id === currentStory ? 'active' : ''}`}
+        >
+            {story.title}
+        </a>
+    ))}
+</aside>
+

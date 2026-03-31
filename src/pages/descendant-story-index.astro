@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import Tile from '../components/Tile.astro';
 
 const pageTitle = "A Just and True Return: Essays";
 
@@ -7,7 +8,19 @@ const pageTitle = "A Just and True Return: Essays";
 
 <PageLayout pageTitle={pageTitle}>
   <h1>Descendant Stories</h1>
-<p>Placeholder</p>
+<p>The essays featured in this collection are composed by descendants of once-enslaved Pennsylvanians—"registered people” in the parlance of A Just and True Return (JTR). The following contributors have generously shared their family histories and personal stories so that users of this website can glimpse some of the lives lived beyond the boundaries of the slave registrations. </p>
+
+<div class="w-100 p-3">
+    <div class="row g-3">
+
+        <Tile href="/stories/burnette-cuff" title="David Burnette on the Cuff Family" />
+        <Tile href="/stories/burnette-watson" title="David Burnette on the Watson Family" />     
+        <Tile href="/stories/mcurdy" title="Patrick McCurdy on Nasa McCurdy" />
+        <Tile href="/stories/perkins-kelley" title="Alicia Perkins on Hannah Kelley " />
+
+
+    </div>
+</div>
 
 
 </PageLayout>

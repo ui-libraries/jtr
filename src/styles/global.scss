@@ -239,6 +239,32 @@ hr {
 }
 
 
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .story-tile {
+        padding: 1rem;
+        text-decoration: none;
+        color: inherit;
+        transition: background-color 0.2s;
+    }
+
+    .story-tile:hover {
+        background-color: #f0f0f0;
+    }
+
+    .story-tile.active {
+        background-color: colors.$primary-accent;
+        color: white;
+    }
+
+
+    .figure {
+        display:block;
+    }
 /* Dashboard Styles */
 
 
